@@ -16,6 +16,9 @@ public class App extends Application
     }
 
     public void start(Stage stage) {
-        new Editor(stage);
+        Editor editor = new Editor(stage);
+
+        Test test = new Test();
+        editor.addNode(test);
     }
 }

@@ -4,18 +4,20 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import nodelibrary.editor.node.Node;
 import nodelibrary.editor.view.EditorCanvas;
 import nodelibrary.editor.view.EditorToolBar;
 
 public class Editor {
     
+    EditorCanvas canvas;
 
     public Editor(Stage stage) {
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root, 1280, 720);
         
 
-        EditorCanvas canvas = new EditorCanvas();
+        canvas = new EditorCanvas();
         EditorToolBar toolbar = new EditorToolBar();
 
         AnchorPane topAnchor = new AnchorPane(toolbar);
@@ -31,5 +33,13 @@ public class Editor {
         stage.setMaximized(true);
         stage.setScene(scene);
         stage.show();
+
+        String s = getClass().getResource("./Style.css").toExternalForm();
+        scene.getStylesheets().add(s);
+    }
+
+
+    public void addNode(Node node) {
+        canvas.addNode(node);
     }
 }

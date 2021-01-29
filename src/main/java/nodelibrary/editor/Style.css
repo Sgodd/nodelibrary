@@ -1,0 +1,12 @@
+.root {
+
+}
+
+.node-container {
+    -fx-background-color:#222;
+}
+
+.node-section * {
+    -fx-text-fill:white;
+}
+
