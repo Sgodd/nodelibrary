@@ -1,13 +1,21 @@
 package nodelibrary;
 
+import javafx.application.Application;
+import javafx.stage.Stage;
+import nodelibrary.editor.Editor;
+
 /**
  * Hello world!
  *
  */
-public class App 
+public class App extends Application
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        launch(args);
+    }
+
+    public void start(Stage stage) {
+        new Editor(stage);
     }
 }

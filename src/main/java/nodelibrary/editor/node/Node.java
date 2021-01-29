@@ -1,5 +1,7 @@
 package nodelibrary.editor.node;
 
-public class Node {
+import javafx.scene.Group;
+
+public class Node extends Group {
     
 }
