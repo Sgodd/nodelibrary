@@ -2,7 +2,6 @@ package nodelibrary.editor.view;
 
 import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import nodelibrary.editor.node.Node;
 
 public class EditorCanvas extends AnchorPane {

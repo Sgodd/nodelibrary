@@ -1,9 +1,6 @@
 package nodelibrary.editor.view;
 
-import javafx.scene.Group;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 public class EditorScene extends Pane {
     
