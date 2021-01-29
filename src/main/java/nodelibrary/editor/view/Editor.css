@@ -1,5 +1,5 @@
 .editor-background {
-    -fx-background-color: #555,
-        linear-gradient(from 0.0px 0.0px to 20px  0.0px, repeat, #666 5%, transparent 5%),
-        linear-gradient(from 0.0px 0.0px to  0.0px 20.0px, repeat, #666 5%, transparent 5%);
+    -fx-background-color: #444,
+        linear-gradient(from 0.0px 0.0px to 20px  0.0px, repeat, #555 5%, transparent 5%),
+        linear-gradient(from 0.0px 0.0px to  0.0px 20.0px, repeat, #555 5%, transparent 5%);
 }

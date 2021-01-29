@@ -8,9 +8,13 @@ public class EditorCanvas extends AnchorPane {
     
     public static double GLOBAL_SCALE = 1;
 
+
+    private EditorScene scene;
+    private Group       nodes;
+
     public EditorCanvas() {
-        EditorScene scene = new EditorScene();  
-        Group       nodes = new Group();
+        scene = new EditorScene();  
+        nodes = new Group();
         
         setTopAnchor(scene, 0.0);
         setBottomAnchor(scene, 0.0);
@@ -21,6 +25,6 @@ public class EditorCanvas extends AnchorPane {
     }
 
     public void addNode(Node node) {
-        getChildren().add(node);
+        nodes.getChildren().add(node);
     }
 }
