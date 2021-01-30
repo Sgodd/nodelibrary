@@ -1,6 +1,6 @@
 package nodelibrary.editor.node.components.control;
 
-public class DoubleControl extends ValueControl<Double> {
+public class DoubleControl extends DataControl<Double> {
     
     public DoubleControl() {
         

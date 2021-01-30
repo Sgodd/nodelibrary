@@ -2,9 +2,9 @@ package nodelibrary.editor.node.components.control;
 
 import javafx.scene.Group;
 
-public abstract class ValueControl<T> extends Group {
+public abstract class DataControl<T> extends Group {
 
-    public ValueControl() {
+    public DataControl() {
         getStyleClass().add("value-control");
     }
 
