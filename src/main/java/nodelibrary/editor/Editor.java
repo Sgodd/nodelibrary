@@ -25,8 +25,8 @@ public class Editor {
         AnchorPane.setLeftAnchor(toolbar, 0.0);
         AnchorPane.setRightAnchor(toolbar, 0.0);
 
-        root.setTop(topAnchor);
         root.setCenter(canvas);
+        root.setTop(topAnchor);
         root.requestFocus();
 
         stage.setTitle("Node Editor");
