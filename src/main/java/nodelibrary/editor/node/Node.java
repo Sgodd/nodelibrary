@@ -2,10 +2,10 @@ package nodelibrary.editor.node;
 
 import javafx.scene.Group;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import nodelibrary.editor.node.components.NodeLabel;
-import nodelibrary.editor.node.components.NodeSection;
+import nodelibrary.editor.node.components.NodeOutput;
+import nodelibrary.editor.view.EditorCanvas;
 
 public abstract class Node extends Group {
 
@@ -22,7 +22,9 @@ public abstract class Node extends Group {
     private double yOffset;
 
     protected VBox container = new VBox();
-    private Rectangle border = new Rectangle();
+
+    protected NodeOutput<?>[] outputs;
+    // protected NodeInput<?>[] inputs;
 
     public Node(double x, double y, String labelText) {
         initialize();
@@ -31,18 +33,17 @@ public abstract class Node extends Group {
         container.getChildren().add(label);
         container.getStyleClass().add("node-container");
 
-        border.widthProperty().bind(container.widthProperty());
-        border.heightProperty().bind(container.heightProperty());
-        border.setArcWidth(8);
-        border.setArcHeight(8);
-        border.setFill(Color.TRANSPARENT);
-        border.setStroke(Color.BLACK);
-        border.setStrokeWidth(2);
+        setScaleX(EditorCanvas.GLOBAL_SCALE);
+        setScaleY(EditorCanvas.GLOBAL_SCALE);
+       
         
+        if (outputs.length > 0) {
+            container.getChildren().addAll(outputs);
+        }
 
         relocate(x, y);
 
-        getChildren().addAll(container, border);
+        getChildren().addAll(container);
 
         initHandlers();
     }
@@ -67,19 +68,11 @@ public abstract class Node extends Group {
             xOffset = e.getX();
             yOffset = e.getY();
         });
+
+        setOnMouseDragged(e -> {
+            relocate(e.getSceneX() - xOffset, e.getSceneY() - yOffset);
+        });
     }
-
-    /**
-     * Used to add a section to the node
-     * 
-     * @param section Thes ection to be added
-     */
-    protected void addSection(NodeSection section) {
-
-    }
-
-
-
 }
 
 
