@@ -9,7 +9,7 @@ public class Test extends Node {
     private NodeOutput<Double> result;
 
     public Test() {
-        super(300, 300, "Test Node");
+        super(0, 0, "Test Node");
     }
 
     protected void initialize() {

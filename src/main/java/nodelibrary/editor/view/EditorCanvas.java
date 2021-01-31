@@ -6,7 +6,7 @@ import nodelibrary.editor.node.Node;
 
 public class EditorCanvas extends AnchorPane {
     
-    public static double GLOBAL_SCALE = 2;
+    public static double GLOBAL_SCALE = 1;
 
 
     private EditorScene scene;

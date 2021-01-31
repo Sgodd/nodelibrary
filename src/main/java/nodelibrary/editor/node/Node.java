@@ -1,5 +1,6 @@
 package nodelibrary.editor.node;
 
+import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
@@ -29,19 +30,21 @@ public abstract class Node extends Group {
     public Node(double x, double y, String labelText) {
         initialize();
 
+        relocate(x, y);
+
+
         NodeLabel label = new NodeLabel(labelText);
         container.getChildren().add(label);
         container.getStyleClass().add("node-container");
 
-        setScaleX(EditorCanvas.GLOBAL_SCALE);
-        setScaleY(EditorCanvas.GLOBAL_SCALE);
+        // setScaleX(EditorCanvas.GLOBAL_SCALE);
+        // setScaleY(EditorCanvas.GLOBAL_SCALE);
        
         
         if (outputs.length > 0) {
             container.getChildren().addAll(outputs);
         }
 
-        relocate(x, y);
 
         getChildren().addAll(container);
 
@@ -67,10 +70,16 @@ public abstract class Node extends Group {
         setOnMousePressed(e -> {
             xOffset = e.getX();
             yOffset = e.getY();
+            System.out.println(getLayoutX() + ", " + getLayoutY());
+
         });
 
         setOnMouseDragged(e -> {
-            relocate(e.getSceneX() - xOffset, e.getSceneY() - yOffset);
+
+            Point2D pos = sceneToLocal(localToParent(e.getSceneX(), e.getSceneY()));
+            relocate(pos.getX() - xOffset, pos.getY() - yOffset);
+            System.out.println(getLayoutX() + ", " + getLayoutY());
+
         });
     }
 }
