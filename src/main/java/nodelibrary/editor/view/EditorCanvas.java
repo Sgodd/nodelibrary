@@ -3,11 +3,11 @@ package nodelibrary.editor.view;
 import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
 import nodelibrary.editor.node.Node;
+import nodelibrary.editor.node.components.sockets.Socket;
 
 public class EditorCanvas extends AnchorPane {
     
     public static double GLOBAL_SCALE = 1;
-
 
     private EditorScene scene;
     private Group       nodes;
@@ -21,7 +21,7 @@ public class EditorCanvas extends AnchorPane {
         setLeftAnchor(scene, 0.0);
         setRightAnchor(scene, 0.0);
 
-        getChildren().addAll(scene, nodes);
+        getChildren().addAll(scene, Socket.guideLine(), nodes);
     }
 
     public void addNode(Node node) {

@@ -4,32 +4,29 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import nodelibrary.editor.node.components.control.DataControl;
 import nodelibrary.editor.node.components.sockets.Socket;
-import nodelibrary.editor.node.components.sockets.SocketOutput;
+import nodelibrary.editor.node.components.sockets.SocketInput;
 
 
-public class NodeOutput<T> extends NodeSection {
-    
-    private DataControl<T> dataControl;
+public class NodeInput<T> extends NodeSection {
     
     private Class<T> type;
-    private T        data;
+    private T        value;
 
-    public NodeOutput(Class<T> type, String labelText, DataControl<T> dataControl) {
+    public NodeInput(Class<T> type, String labelText) {
         super();
         this.type = type;
-
+        
         Label label = new Label(labelText);
-        this.dataControl = dataControl;    
 
         grid.add(label, 0, 0);
-        grid.add(dataControl, 0, 1);
-
        
-        SocketOutput<T> socket = Socket.out(this, type);
+        SocketInput<T> socket = Socket.in(this, type);
         getChildren().add(socket);
 
-        AnchorPane.setRightAnchor(socket, -9.0);
+        AnchorPane.setLeftAnchor(socket, -9.0);
         AnchorPane.setTopAnchor(socket, 5.0);
     }
+
+
 
 }

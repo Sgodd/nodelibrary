@@ -2,7 +2,6 @@ package nodelibrary.editor;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import nodelibrary.editor.node.Node;
 import nodelibrary.editor.view.EditorCanvas;
@@ -13,20 +12,24 @@ public class Editor {
     EditorCanvas canvas;
 
     public Editor(Stage stage) {
-        BorderPane root = new BorderPane();
+        AnchorPane root = new AnchorPane();
+        
         Scene scene = new Scene(root, 1280, 720);
         
 
         canvas = new EditorCanvas();
         EditorToolBar toolbar = new EditorToolBar();
 
-        AnchorPane topAnchor = new AnchorPane(toolbar);
+        AnchorPane.setTopAnchor(canvas, 0.0);
+        AnchorPane.setLeftAnchor(canvas, 0.0);
+        AnchorPane.setRightAnchor(canvas, 0.0);
+        AnchorPane.setBottomAnchor(canvas, 0.0);
+
         AnchorPane.setTopAnchor(toolbar, 0.0);
         AnchorPane.setLeftAnchor(toolbar, 0.0);
         AnchorPane.setRightAnchor(toolbar, 0.0);
 
-        root.setCenter(canvas);
-        root.setTop(topAnchor);
+        root.getChildren().addAll(canvas, toolbar);
         root.requestFocus();
 
         stage.setTitle("Node Editor");
