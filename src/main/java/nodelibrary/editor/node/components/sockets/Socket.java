@@ -44,7 +44,7 @@ public abstract class Socket extends Circle {
             Object source = e.getGestureSource();
             
             if (isSocket(source) && source != this) {
-                if (socketTest((Socket) source, this)) {
+                if (isCompatible((Socket) source, this)) {
                     guideLine.setStroke(Color.GOLDENROD);
                     guideLine.setEnd(localToScene(0,0));
                 }
@@ -67,11 +67,11 @@ public abstract class Socket extends Circle {
         });
     }
 
-    private boolean isSocket(Object o) {
+    protected boolean isSocket(Object o) {
         return Socket.class.isAssignableFrom(o.getClass());
     }
 
-    private static <T> boolean socketTest(Socket s1, Socket s2) {
+    protected static boolean isCompatible(Socket s1, Socket s2) {
 
         if (s1.getClass() == s2.getClass()) {
             return false;
@@ -85,7 +85,7 @@ public abstract class Socket extends Circle {
     }
 
 
-    public Point2D getLocation() {
+    public Point2D getCenter() {
         return localToScene(0, 0);
     }
 
