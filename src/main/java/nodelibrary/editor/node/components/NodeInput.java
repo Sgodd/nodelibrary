@@ -24,7 +24,7 @@ public class NodeInput<T> extends NodeSection {
         getChildren().add(socket);
 
         AnchorPane.setLeftAnchor(socket, -9.0);
-        AnchorPane.setTopAnchor(socket, 5.0);
+        AnchorPane.setTopAnchor(socket, 11.0);
     }
 
 

@@ -82,31 +82,6 @@ public abstract class Socket extends Circle {
         } else {
             return false;
         }
-
-        // try {
-
-        //     System.out.println(s1.getClass());
-        //     System.out.println(s2.getClass());
-
-        //     if (s1.getClass() == s2.getClass()) {
-        //         return false;
-        //     }
-
-        //     System.out.println("C1");
-
-        //     if (SocketOutput.class == s1.getClass()) {
-        //         System.out.println("C2");
-        //     }
-
-        //     if (SocketInput.class == s1.getClass()) {
-        //         SocketInput<T>  in  = (SocketInput<T>)  s1;
-        //         SocketOutput<T> out = (SocketOutput<T>) s2;
-        //     }
-            
-        //     return false;
-        // } catch (Exception ex) {
-        //     return false;
-        // }
     }
 
 

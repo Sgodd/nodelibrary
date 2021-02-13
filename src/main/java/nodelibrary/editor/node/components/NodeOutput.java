@@ -29,7 +29,7 @@ public class NodeOutput<T> extends NodeSection {
         getChildren().add(socket);
 
         AnchorPane.setRightAnchor(socket, -9.0);
-        AnchorPane.setTopAnchor(socket, 5.0);
+        AnchorPane.setTopAnchor(socket, 11.0);
     }
 
 }

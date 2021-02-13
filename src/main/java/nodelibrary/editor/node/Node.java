@@ -1,8 +1,6 @@
 package nodelibrary.editor.node;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import javafx.scene.Group;
 import javafx.scene.layout.VBox;
@@ -31,8 +29,10 @@ public abstract class Node extends Group {
      */
     protected VBox container = new VBox();
 
-    private NodeOutput<?>[] outputs = new NodeOutput<?>[0];
-    private NodeInput<?>[]  inputs  = new NodeInput<?>[0];
+    private ArrayList<NodeOutput<?>> outputs = new ArrayList<>();
+    private ArrayList<NodeInput<?>> inputs = new ArrayList<>();
+    // private NodeOutput<?>[] outputs = new ArNodeOutput<?>[0];
+    // private NodeInput<?>[]  inputs  = new NodeInput<?>[0];
 
     public Node(double x, double y, String labelText) {
         initialize();
@@ -44,14 +44,14 @@ public abstract class Node extends Group {
         container.getChildren().add(label);
         container.getStyleClass().add("node-container");
         
-        setScaleX(EditorCanvas.GLOBAL_SCALE);
-        setScaleY(EditorCanvas.GLOBAL_SCALE);
+        // setScaleX(EditorCanvas.GLOBAL_SCALE);
+        // setScaleY(EditorCanvas.GLOBAL_SCALE);
        
-        if (outputs.length > 0) {
+        if (!outputs.isEmpty()) {
             container.getChildren().addAll(outputs);
         }
 
-        if (inputs.length > 0) {
+        if (!inputs.isEmpty()) {
             container.getChildren().addAll(inputs);
         }
 
@@ -83,26 +83,21 @@ public abstract class Node extends Group {
 
         // On mouse drag on a node, relocate the position of the node relative to the x and y offsets
         setOnMouseDragged(e -> {
-            relocate(e.getSceneX() - xOffset, e.getSceneY() - yOffset);
+            // xOffset - 7.0 to account for socket protrusion
+            relocate(e.getSceneX() - xOffset - 7.0, e.getSceneY() - yOffset);
         });
     }
 
     public <T> NodeInput<T> input(Class<T> type, String label) {
         NodeInput<T> input = new NodeInput<T>(type, label);
-
-        List<NodeInput<?>> arr = new ArrayList<NodeInput<?>>(Arrays.asList(inputs));
-        arr.add(input);
-        inputs = arr.toArray(inputs);
+        inputs.add(input);
 
         return input;
     }
 
     public <T> NodeOutput<T> output(Class<T> type, String label, DataControl<T> control) {
         NodeOutput<T> output = new NodeOutput<T>(type, label, control);
-        
-        List<NodeOutput<?>> arr = new ArrayList<NodeOutput<?>>(Arrays.asList(outputs));
-        arr.add(output);
-        outputs = arr.toArray(outputs);
+        outputs.add(output);
 
         return output;
     }
