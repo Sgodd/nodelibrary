@@ -2,6 +2,7 @@ package nodelibrary.editor.node.components;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import nodelibrary.editor.node.Node;
 import nodelibrary.editor.node.components.control.DataControl;
 import nodelibrary.editor.node.components.sockets.Socket;
 import nodelibrary.editor.node.components.sockets.SocketOutput;
@@ -14,8 +15,8 @@ public class NodeOutput<T> extends NodeSection {
     private Class<T> type;
     private T data;
 
-    public NodeOutput(Class<T> type, String labelText, DataControl<T> dataControl) {
-        super();
+    public NodeOutput(Class<T> type, String labelText, DataControl<T> dataControl, Node parent) {
+        super(parent);
         this.type = type;
 
         Label label = new Label(labelText);

@@ -3,6 +3,7 @@ package nodelibrary.editor.node.components.sockets;
 import java.util.ArrayList;
 
 import nodelibrary.editor.node.components.NodeOutput;
+import nodelibrary.editor.node.components.NodeSection;
 
 public class SocketOutput<T> extends Socket {
 
@@ -10,6 +11,8 @@ public class SocketOutput<T> extends Socket {
     private ArrayList<SocketConnection> connections = new ArrayList<>();
 
     public SocketOutput(NodeOutput<T> component, Class<T> type) {
+        super(component);
+        
         this.component = component;
         this.type = type;
     }
@@ -38,6 +41,11 @@ public class SocketOutput<T> extends Socket {
         for (SocketConnection connection : connections) {
             connection.setStart(getCenter());
         }
+    }
+
+    @Override
+    public NodeSection getSection() {
+        return component;
     }
 }
 

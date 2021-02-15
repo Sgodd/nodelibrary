@@ -5,15 +5,20 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import nodelibrary.editor.node.components.NodeInput;
 import nodelibrary.editor.node.components.NodeOutput;
+import nodelibrary.editor.node.components.NodeSection;
+import nodelibrary.editor.node.events.DataEvent;
 
 public abstract class Socket extends Circle {
     
     public static final double RADIUS = 7;
 
     protected Class<?> type;
+    private final NodeSection component;
 
-    public Socket() {
+    public Socket(NodeSection component) {
         super(RADIUS);
+
+        this.component = component;
 
         setFill(Color.WHITE);
         setStroke(Color.BLACK);
@@ -65,6 +70,8 @@ public abstract class Socket extends Circle {
                 Socket socket = (Socket) source;
                 SocketConnection connection = this.createLink(socket);
 
+                this.fireEvent(new DataEvent(DataEvent.LINK_UPDATE, component.getNode()));
+
                 SocketController.MAIN.addConnection(connection);
             }
         });
@@ -93,6 +100,8 @@ public abstract class Socket extends Circle {
 
     public abstract SocketConnection createLink(Socket socket);
     public abstract void updateConnections();
+
+    public abstract NodeSection getSection();
 
 
     public Point2D getCenter() {

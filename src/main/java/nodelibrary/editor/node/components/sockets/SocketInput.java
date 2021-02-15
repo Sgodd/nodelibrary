@@ -1,14 +1,17 @@
 package nodelibrary.editor.node.components.sockets;
 
 import nodelibrary.editor.node.components.NodeInput;
+import nodelibrary.editor.node.components.NodeSection;
 
 public class SocketInput<T> extends Socket {
 
     private NodeInput<T> component;
-    
+
     private SocketConnection connection = null;
 
     public SocketInput(NodeInput<T> component, Class<T> type) {
+        super(component);
+        
         this.component = component;
         this.type = type;
     }
@@ -18,7 +21,6 @@ public class SocketInput<T> extends Socket {
         if (isCompatible(this, socket)) {
             SocketOutput<T> socketOutput = (SocketOutput<T>) socket;
             SocketConnection connection = new SocketConnection(socketOutput, this);
-
 
             if (this.connection != null) {
                 SocketController.MAIN.removeConnection(this.connection);
@@ -47,6 +49,11 @@ public class SocketInput<T> extends Socket {
         if (connection != null) {
             connection.setEnd(getCenter());
         }
+    }
+
+    @Override
+    public NodeSection getSection() {
+        return component;
     }
 }
 

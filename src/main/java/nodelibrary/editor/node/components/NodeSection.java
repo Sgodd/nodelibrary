@@ -3,12 +3,16 @@ package nodelibrary.editor.node.components;
 import javafx.geometry.Insets;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import nodelibrary.editor.node.Node;
 
 public abstract class NodeSection extends AnchorPane {
     
     protected GridPane grid = new GridPane();
+    private final Node parent;
 
-    public NodeSection() {
+    public NodeSection(Node parent) {
+        this.parent = parent;
+
         AnchorPane.setLeftAnchor(grid, 0.0);
         AnchorPane.setRightAnchor(grid, 0.0);
 
@@ -22,4 +26,9 @@ public abstract class NodeSection extends AnchorPane {
         getStyleClass().add("node-section");
         getChildren().add(grid);
     }
+
+    public Node getNode() {
+        return parent;
+    }
+
 }

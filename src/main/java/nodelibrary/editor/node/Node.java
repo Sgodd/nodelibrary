@@ -2,6 +2,7 @@ package nodelibrary.editor.node;
 
 import java.util.ArrayList;
 
+import javafx.event.Event;
 import javafx.scene.Group;
 import javafx.scene.layout.VBox;
 import nodelibrary.editor.node.components.NodeLabel;
@@ -40,7 +41,7 @@ public abstract class Node extends Group {
         relocate(x, y);
 
 
-        NodeLabel label = new NodeLabel(labelText);
+        NodeLabel label = new NodeLabel(labelText, this);
         container.getChildren().add(label);
         container.getStyleClass().add("node-container");
         
@@ -85,22 +86,34 @@ public abstract class Node extends Group {
         setOnMouseDragged(e -> {
             // xOffset - 7.0 to account for socket protrusion
             relocate(e.getSceneX() - xOffset - 7.0, e.getSceneY() - yOffset);
+            updateSockets();
         });
     }
 
     public <T> NodeInput<T> input(Class<T> type, String label) {
-        NodeInput<T> input = new NodeInput<T>(type, label);
+        NodeInput<T> input = new NodeInput<T>(type, label, this);
         inputs.add(input);
 
         return input;
     }
 
     public <T> NodeOutput<T> output(Class<T> type, String label, DataControl<T> control) {
-        NodeOutput<T> output = new NodeOutput<T>(type, label, control);
+        NodeOutput<T> output = new NodeOutput<T>(type, label, control, this);
         outputs.add(output);
 
         return output;
     }
+
+    public void updateSockets() {
+        for (NodeOutput<?> output : outputs) {
+            output.updateSocket();
+        }
+
+        for (NodeInput<?> input : inputs) {
+            input.updateSocket();
+        }
+    }
+
 }
 
 
