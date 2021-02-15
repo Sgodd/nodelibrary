@@ -6,6 +6,7 @@ import nodelibrary.editor.node.Node;
 import nodelibrary.editor.node.components.control.DataControl;
 import nodelibrary.editor.node.components.sockets.Socket;
 import nodelibrary.editor.node.components.sockets.SocketOutput;
+import nodelibrary.editor.node.events.SocketEvent;
 
 public class NodeOutput<T> extends NodeSection {
 
@@ -13,23 +14,32 @@ public class NodeOutput<T> extends NodeSection {
     SocketOutput<T> socket;
 
     private Class<T> type;
-    private T data;
+    private T value;
 
     public NodeOutput(Class<T> type, String labelText, DataControl<T> dataControl, Node parent) {
         super(parent);
         this.type = type;
 
         Label label = new Label(labelText);
-        this.dataControl = dataControl;
 
-        grid.add(label, 0, 0);
-        grid.add(dataControl, 0, 1);
+        if (dataControl != null) {
+            this.dataControl = dataControl;
+
+            grid.add(label, 0, 0);
+            grid.add(dataControl, 0, 1);
+        }
 
         socket = Socket.out(this, type);
         getChildren().add(socket);
 
         AnchorPane.setRightAnchor(socket, -9.0);
         AnchorPane.setTopAnchor(socket, 11.0);
+
+        addEventHandler(SocketEvent.OUTPUT_LINKED, e -> {
+            e.connection.passValue();
+
+            e.consume();
+        });
     }
 
     /**
@@ -37,8 +47,11 @@ public class NodeOutput<T> extends NodeSection {
      * 
      * @param data
      */
-    public void setValue(T data) {
-        this.data = data;
+    public void setValue(T value) {
+        if (this.value != value) {
+            this.value = value;
+            socket.broadcast();            
+        }
     }
 
     /**
@@ -47,14 +60,7 @@ public class NodeOutput<T> extends NodeSection {
      * @return The value of the data
      */
     public T getValue() {
-        return data;
-    }
-
-    /**
-     * Broadcasts the value of the data to all connected Inputs
-     */
-    public void broadcast() {
-        
+        return value;
     }
 
     public void updateSocket() {

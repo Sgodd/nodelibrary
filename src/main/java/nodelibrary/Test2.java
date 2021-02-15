@@ -22,6 +22,7 @@ public class Test2 extends Node {
     }
 
     protected void function() {
-        
+        Double value = test.getValue() + test2.getValue();
+        result.setValue(value);
     }
 }

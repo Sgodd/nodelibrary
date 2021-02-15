@@ -13,7 +13,7 @@ public abstract class Socket extends Circle {
     public static final double RADIUS = 7;
 
     protected Class<?> type;
-    private final NodeSection component;
+    protected final NodeSection component;
 
     public Socket(NodeSection component) {
         super(RADIUS);
@@ -28,7 +28,7 @@ public abstract class Socket extends Circle {
     }
 
     private void initHandlers() {
-        SocketConnection guideLine = SocketController.MAIN.guideLine();
+        SocketConnection<Void> guideLine = SocketController.MAIN.guideLine();
 
         setOnMousePressed(e -> {
             guideLine.setStart(localToScene(0, 0));
@@ -38,6 +38,12 @@ public abstract class Socket extends Circle {
         });
 
         setOnDragDetected(e -> {
+
+            if (this.getClass() == SocketInput.class) {
+                SocketInput<?> socket = (SocketInput<?>) this;
+                socket.removeConnection();
+            }
+
             startFullDrag();
         });
 
@@ -68,10 +74,8 @@ public abstract class Socket extends Circle {
             Object source = e.getGestureSource();
             if (isSocket(source)) {
                 Socket socket = (Socket) source;
-                SocketConnection connection = this.createLink(socket);
-
-                this.fireEvent(new DataEvent(DataEvent.LINK_UPDATE, component.getNode()));
-
+                SocketConnection<?> connection = this.createLink(socket);
+                
                 SocketController.MAIN.addConnection(connection);
             }
         });
@@ -91,14 +95,14 @@ public abstract class Socket extends Circle {
             return false;
         } 
 
-        if (s1.type == s2.type) {
+        if (s1.type.isAssignableFrom(s2.type) || s2.type.isAssignableFrom(s1.type)) {
             return true;
         } else {
             return false;
         }
     }
 
-    public abstract SocketConnection createLink(Socket socket);
+    public abstract SocketConnection<?> createLink(Socket socket);
     public abstract void updateConnections();
 
     public abstract NodeSection getSection();

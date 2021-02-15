@@ -3,28 +3,30 @@ package nodelibrary.editor.node.components.sockets;
 import java.util.ArrayList;
 
 import nodelibrary.editor.node.components.NodeOutput;
-import nodelibrary.editor.node.components.NodeSection;
+import nodelibrary.editor.node.events.SocketEvent;
 
 public class SocketOutput<T> extends Socket {
 
     private NodeOutput<T> component;
-    private ArrayList<SocketConnection> connections = new ArrayList<>();
+    private ArrayList<SocketConnection<T>> connections = new ArrayList<>();
 
     public SocketOutput(NodeOutput<T> component, Class<T> type) {
         super(component);
-        
+
         this.component = component;
         this.type = type;
     }
-    
+
     @SuppressWarnings("unchecked")
-    public SocketConnection createLink(Socket socket) {
+    public SocketConnection<T> createLink(Socket socket) {
         if (isCompatible(this, socket)) {
             SocketInput<T> socketInput = (SocketInput<T>) socket;
-            SocketConnection connection = new SocketConnection(this, socketInput);
-
+            SocketConnection<T> connection = new SocketConnection<>(this, socketInput);
+            
             socketInput.setConnection(connection);
             connections.add(connection);
+           
+            this.fireEvent(new SocketEvent(SocketEvent.OUTPUT_LINKED, connection));
 
             return connection;
         } else {
@@ -32,20 +34,32 @@ public class SocketOutput<T> extends Socket {
         }
     }
 
-    public void addConnection(SocketConnection connection) {
+    public void addConnection(SocketConnection<T> connection) {
         connections.add(connection);
     }
 
     @Override
     public void updateConnections() {
-        for (SocketConnection connection : connections) {
+        for (SocketConnection<T> connection : connections) {
             connection.setStart(getCenter());
         }
     }
 
+    public void removeConnection(SocketConnection<T> connection) {
+        if (connections.contains(connection)) {
+            connections.remove(connection);
+            connection.destroy();
+        }
+    }
+
     @Override
-    public NodeSection getSection() {
+    public NodeOutput<T> getSection() {
         return component;
     }
-}
 
+    public void broadcast() {
+        for (SocketConnection<T> connection : connections) {
+            connection.passValue();
+        }
+    }
+}

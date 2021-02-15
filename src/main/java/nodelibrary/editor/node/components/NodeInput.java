@@ -3,9 +3,10 @@ package nodelibrary.editor.node.components;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import nodelibrary.editor.node.Node;
-import nodelibrary.editor.node.components.control.DataControl;
 import nodelibrary.editor.node.components.sockets.Socket;
 import nodelibrary.editor.node.components.sockets.SocketInput;
+import nodelibrary.editor.node.events.DataEvent;
+import nodelibrary.editor.node.events.SocketEvent;
 
 
 public class NodeInput<T> extends NodeSection {
@@ -28,10 +29,24 @@ public class NodeInput<T> extends NodeSection {
 
         AnchorPane.setLeftAnchor(socket, -9.0);
         AnchorPane.setTopAnchor(socket, 11.0);
+
+        addEventHandler(SocketEvent.INPUT_LINKED, e -> {
+            e.connection.passValue();
+        });
     }
 
     public void updateSocket() {
         socket.updateConnections();
     }
 
+    public void setValue(T value) {
+        if (this.value != value) {
+            this.value = value;
+            this.fireEvent(new DataEvent(DataEvent.INPUT_UPDATE));
+        }
+    }
+
+    public T getValue() {
+        return value;
+    }
 }

@@ -1,14 +1,11 @@
 package nodelibrary.editor.node.components.sockets;
 
-import javafx.geometry.Point2D;
 import javafx.scene.Group;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 public class SocketController extends Group {
 
     public static final SocketController MAIN = new SocketController();
-    private SocketConnection guideLine = new SocketConnection();
+    private SocketConnection<Void> guideLine = new SocketConnection<>();
 
     public SocketController() {
     }
@@ -18,7 +15,7 @@ public class SocketController extends Group {
      * 
      * @param connection
      */
-    public void addConnection(SocketConnection connection) {
+    public void addConnection(SocketConnection<?> connection) {
         if (!getChildren().contains(connection)) {
             getChildren().add(connection);
         }
@@ -29,7 +26,7 @@ public class SocketController extends Group {
      * 
      * @param connection
      */
-    public void removeConnection(SocketConnection connection) {
+    public void removeConnection(SocketConnection<?> connection) {
         if (getChildren().contains(connection)) {
             getChildren().remove(connection);
         }
@@ -40,7 +37,7 @@ public class SocketController extends Group {
      * 
      * @return A SocketConnection for the guideline of the socket controller
      */
-    public SocketConnection guideLine() {
+    public SocketConnection<Void> guideLine() {
         return guideLine;
     }
 

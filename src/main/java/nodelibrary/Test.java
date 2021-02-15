@@ -17,9 +17,11 @@ public class Test extends Node {
     protected void initialize() {
         result = output(Double.class, "Result", new DoubleControl());
         test   = input(Double.class, "Result");
+
+        result.setValue(1.0);
     }
 
     protected void function() {
-        
+        result.setValue(test.getValue() * 5);
     }
 }

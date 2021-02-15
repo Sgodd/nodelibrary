@@ -8,8 +8,8 @@ import javafx.scene.layout.VBox;
 import nodelibrary.editor.node.components.NodeLabel;
 import nodelibrary.editor.node.components.NodeOutput;
 import nodelibrary.editor.node.components.control.DataControl;
+import nodelibrary.editor.node.events.DataEvent;
 import nodelibrary.editor.node.components.NodeInput;
-import nodelibrary.editor.view.EditorCanvas;
 
 public abstract class Node extends Group {
 
@@ -40,10 +40,10 @@ public abstract class Node extends Group {
 
         relocate(x, y);
 
-
         NodeLabel label = new NodeLabel(labelText, this);
         container.getChildren().add(label);
         container.getStyleClass().add("node-container");
+        container.getStyleClass().add("node-section");
         
         // setScaleX(EditorCanvas.GLOBAL_SCALE);
         // setScaleY(EditorCanvas.GLOBAL_SCALE);
@@ -88,6 +88,11 @@ public abstract class Node extends Group {
             relocate(e.getSceneX() - xOffset - 7.0, e.getSceneY() - yOffset);
             updateSockets();
         });
+
+        addEventHandler(DataEvent.INPUT_UPDATE, e -> {
+            function();
+            e.consume();
+        });
     }
 
     public <T> NodeInput<T> input(Class<T> type, String label) {
@@ -113,7 +118,6 @@ public abstract class Node extends Group {
             input.updateSocket();
         }
     }
-
 }
 
 

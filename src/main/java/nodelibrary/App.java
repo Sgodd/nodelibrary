@@ -25,5 +25,11 @@ public class App extends Application
 
         Test2 test = new Test2(300, 2*100);
         editor.addNode(test);
+
+        PrintNode printer = new PrintNode(300,300);
+        editor.addNode(printer);
+
+        PrintNode printer2 = new PrintNode(300,300);
+        editor.addNode(printer2);
     }
 }

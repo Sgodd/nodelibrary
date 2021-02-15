@@ -4,11 +4,13 @@ import javafx.beans.binding.Bindings;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
+import nodelibrary.editor.node.components.NodeInput;
+import nodelibrary.editor.node.components.NodeOutput;
 
-public class SocketConnection extends CubicCurve {
+public class SocketConnection<T> extends CubicCurve {
     
-    SocketOutput<?> out;
-    SocketInput<?> in;
+    private SocketOutput<T> out;
+    private SocketInput<T> in;
 
 
     public SocketConnection() {
@@ -17,8 +19,7 @@ public class SocketConnection extends CubicCurve {
         setStroke(Color.BLACK);
     }
 
-    public SocketConnection(SocketOutput<?> out, SocketInput<?> in) {
-
+    public SocketConnection(SocketOutput<T> out, SocketInput<T> in) {
         this.out = out;
         this.in = in;
 
@@ -71,5 +72,23 @@ public class SocketConnection extends CubicCurve {
 
     public static double lerp(double start, double end, double ratio) {
         return start + (end - start) * ratio;
+    }
+
+    // public NodeInput<?> getInput() {
+    //     return in.getSection();
+    // }
+
+    // public NodeOutput<?> getOutput() {
+    //     return out.getSection();
+    // }
+
+    public void passValue() {
+        in.getSection().setValue(out.getSection().getValue());
+    }
+
+    public void destroy() {
+        SocketController.MAIN.getChildren().remove(this);
+        out.removeConnection(this);
+        in.removeConnection(this);
     }
 }
