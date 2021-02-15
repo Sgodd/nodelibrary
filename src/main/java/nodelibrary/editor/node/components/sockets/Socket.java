@@ -9,7 +9,6 @@ import nodelibrary.editor.node.components.NodeOutput;
 public abstract class Socket extends Circle {
     
     public static final double RADIUS = 7;
-    private static SocketConnection guideLine = new SocketConnection();
 
     protected Class<?> type;
 
@@ -24,6 +23,8 @@ public abstract class Socket extends Circle {
     }
 
     private void initHandlers() {
+        SocketConnection guideLine = SocketController.MAIN.guideLine();
+
         setOnMousePressed(e -> {
             guideLine.setStart(localToScene(0, 0));
             guideLine.setEnd(new Point2D(e.getSceneX(), e.getSceneY()));
@@ -57,9 +58,15 @@ public abstract class Socket extends Circle {
             guideLine.setStroke(Color.BLACK);
             e.consume();
         });
-        
-        setOnMouseDragReleased(e -> {
 
+        setOnMouseDragReleased(e -> {
+            Object source = e.getGestureSource();
+            if (isSocket(source)) {
+                Socket socket = (Socket) source;
+                SocketConnection connection = this.createLink(socket);
+
+                SocketController.MAIN.addConnection(connection);
+            }
         });
 
         setOnMouseReleased(e -> {
@@ -84,6 +91,9 @@ public abstract class Socket extends Circle {
         }
     }
 
+    public abstract SocketConnection createLink(Socket socket);
+    public abstract void updateConnections();
+
 
     public Point2D getCenter() {
         return localToScene(0, 0);
@@ -96,9 +106,4 @@ public abstract class Socket extends Circle {
     public static <T> SocketOutput<T> out(NodeOutput<T> component, Class<T> type) {
         return new SocketOutput<T>(component, type);
     }
-
-    public static SocketConnection guideLine() {
-        return guideLine;
-    }
-
 }

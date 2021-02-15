@@ -7,8 +7,8 @@ import javafx.scene.shape.CubicCurve;
 
 public class SocketConnection extends CubicCurve {
     
-    SocketOutput<?> from;
-    SocketInput<?> to;
+    SocketOutput<?> out;
+    SocketInput<?> in;
 
 
     public SocketConnection() {
@@ -18,6 +18,13 @@ public class SocketConnection extends CubicCurve {
     }
 
     public SocketConnection(SocketOutput<?> out, SocketInput<?> in) {
+
+        this.out = out;
+        this.in = in;
+
+        setStart(out.getCenter());
+        setEnd(in.getCenter());        
+
         init();
     }
 
@@ -25,25 +32,16 @@ public class SocketConnection extends CubicCurve {
         setFill(Color.TRANSPARENT);
         setStroke(Color.BLACK);
         setStrokeWidth(2);
-
-        setStartX(700);
-        setStartY(500);
-        setEndX(300);
-        setEndY(300);
         
         controlX1Property().bind(
             Bindings.createObjectBinding(()->{
                 return lerp(getStartX(), getEndX(), 0.4);
-                // return getStartX() + Math.abs(getEndX() - getStartX()) * 0.4;
-                // return getStartX() + 20;
             }, startXProperty(), endXProperty())
         );
 
         controlX2Property().bind(
             Bindings.createObjectBinding(() -> {
                 return lerp(getEndX(), getStartX(), 0.4);
-                // return getEndX() - Math.abs(getStartX() - getEndX()) * 0.4;
-                // return getStartX() + Math.abs(getEndX() - getStartX()) * 0.6;
 
             }, startXProperty(), endXProperty())
         );
@@ -51,14 +49,12 @@ public class SocketConnection extends CubicCurve {
         controlY1Property().bind(
             Bindings.createObjectBinding(() ->{
                 return lerp(getStartY(), getEndY(), 0.1);
-                // return getStartY() + (getEndY() - getStartY()) * 0.1;
             }, startYProperty(), endYProperty())
         );
 
         controlY2Property().bind(
             Bindings.createObjectBinding(()->{
                 return lerp(getStartY(), getEndY(), 0.9);
-                // return getStartY() + (getEndY() - getStartY()) * 0.9;
             }, startYProperty(), endYProperty())
         );
     }

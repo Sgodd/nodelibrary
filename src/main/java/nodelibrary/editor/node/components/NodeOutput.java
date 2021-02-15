@@ -56,4 +56,8 @@ public class NodeOutput<T> extends NodeSection {
         
     }
 
+    public void updateSocket() {
+        socket.updateConnections();
+    }
+
 }

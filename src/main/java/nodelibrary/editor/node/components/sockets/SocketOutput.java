@@ -7,31 +7,37 @@ import nodelibrary.editor.node.components.NodeOutput;
 public class SocketOutput<T> extends Socket {
 
     private NodeOutput<T> component;
-    private ArrayList<SocketOutput<T>> connectedSockets;
+    private ArrayList<SocketConnection> connections = new ArrayList<>();
 
     public SocketOutput(NodeOutput<T> component, Class<T> type) {
         this.component = component;
         this.type = type;
-
-        initHandlers();
     }
-
-    public void initHandlers() {
-        setOnMouseDragReleased(e -> {
-            Object source = e.getGestureSource();
-            if (isSocket(source)) {
-                addLink((Socket) source);
-            }
-        });
-    }
-
+    
     @SuppressWarnings("unchecked")
-    public void addLink(Socket socket) {
+    public SocketConnection createLink(Socket socket) {
         if (isCompatible(this, socket)) {
-            SocketOutput<T> socketOutput = (SocketOutput<T>) socket;
-            connectedSockets.add(socketOutput);
+            SocketInput<T> socketInput = (SocketInput<T>) socket;
+            SocketConnection connection = new SocketConnection(this, socketInput);
+
+            socketInput.setConnection(connection);
+            connections.add(connection);
+
+            return connection;
+        } else {
+            return null;
         }
     }
 
+    public void addConnection(SocketConnection connection) {
+        connections.add(connection);
+    }
+
+    @Override
+    public void updateConnections() {
+        for (SocketConnection connection : connections) {
+            connection.setStart(getCenter());
+        }
+    }
 }
 

@@ -9,6 +9,8 @@ import nodelibrary.editor.node.components.sockets.SocketInput;
 
 public class NodeInput<T> extends NodeSection {
     
+    private SocketInput<T> socket;
+
     private Class<T> type;
     private T        value;
 
@@ -20,13 +22,15 @@ public class NodeInput<T> extends NodeSection {
 
         grid.add(label, 0, 0);
        
-        SocketInput<T> socket = Socket.in(this, type);
+        socket = Socket.in(this, type);
         getChildren().add(socket);
 
         AnchorPane.setLeftAnchor(socket, -9.0);
         AnchorPane.setTopAnchor(socket, 11.0);
     }
 
-
+    public void updateSocket() {
+        socket.updateConnections();
+    }
 
 }

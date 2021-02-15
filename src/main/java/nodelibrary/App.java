@@ -18,9 +18,12 @@ public class App extends Application
     public void start(Stage stage) {
         Editor editor = new Editor(stage);
 
-        Test test = new Test(100, 100);
-        Test test2 = new Test(100, 100);
+        for (int i = 0; i < 5; i++) {
+            Test test = new Test(100, 2*i*100);
+            editor.addNode(test);
+        }
+
+        Test2 test = new Test2(300, 2*100);
         editor.addNode(test);
-        editor.addNode(test2);
     }
 }
