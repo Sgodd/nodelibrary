@@ -14,7 +14,7 @@ public class IntegerInput extends NumberInput<Integer> {
     }
 
     @Override
-    protected Integer getValue() {
+    public Integer getValue() {
         return (Integer) input.getTextFormatter().getValue();
     }
 

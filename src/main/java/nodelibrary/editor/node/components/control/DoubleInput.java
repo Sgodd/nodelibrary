@@ -15,7 +15,7 @@ public class DoubleInput extends NumberInput<Double> {
     }
 
     @Override
-    protected Double getValue() {
+    public Double getValue() {
         return (Double) input.getTextFormatter().getValue();
     }
 

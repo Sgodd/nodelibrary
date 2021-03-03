@@ -55,7 +55,7 @@ public abstract class NumberInput<T extends Number> extends Group {
         initHandlers();
     }
 
-    protected abstract T getValue();
+    public abstract T getValue();
     protected abstract void validate();
     protected abstract EventHandler<MouseEvent> dragHandler();
 
