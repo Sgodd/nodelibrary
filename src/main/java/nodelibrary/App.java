@@ -23,7 +23,10 @@ public class App extends Application
             editor.addNode(test);
         }
 
-        Test2 test = new Test2(300, 2*100);
-        editor.addNode(test);
+        Test2 test2 = new Test2(300, 2*100);
+        editor.addNode(test2);
+
+        Test3 test3 = new Test3(300, 4*100);
+        editor.addNode(test3);
     }
 }

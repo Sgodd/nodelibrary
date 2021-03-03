@@ -1,47 +1,56 @@
 package nodelibrary.editor.node.components.sockets;
 
 import nodelibrary.editor.node.components.NodeInput;
-import nodelibrary.editor.node.components.NodeSection;
+import nodelibrary.editor.node.events.SocketEvent;
 
 public class SocketInput<T> extends Socket {
 
-    private NodeInput<T> component;
+    public final NodeInput<T> component;
 
-    private SocketConnection connection = null;
+    private SocketConnection<T> connection = null;
 
     public SocketInput(NodeInput<T> component, Class<T> type) {
         super(component);
         
         this.component = component;
         this.type = type;
+
     }
 
     @SuppressWarnings("unchecked")
-    public SocketConnection createLink(Socket socket) {
+    public void createLink(Socket socket) {
         if (isCompatible(this, socket)) {
             SocketOutput<T> socketOutput = (SocketOutput<T>) socket;
-            SocketConnection connection = new SocketConnection(socketOutput, this);
+            SocketConnection<T> connection = new SocketConnection<>(socketOutput, this);
 
             if (this.connection != null) {
-                SocketController.MAIN.removeConnection(this.connection);
+                this.connection.destroy();
             }
 
-            this.connection = connection;
-            SocketController.MAIN.addConnection(this.connection);
-
-            socketOutput.addConnection(this.connection);
-
-            return connection;
-        } else {
-            return null;
+            connection.assign();
+        }
+    }
+    
+    // TODO: Add to abstract super
+    public void disown(SocketConnection<?> connection) {
+        if (this.connection.equals(connection)) {
+            this.connection = null;
+            component.controlDisabled(false);
         }
     }
 
-    public void setConnection(SocketConnection connection) {
-        SocketController.MAIN.getChildren().remove(this.connection);
-        this.connection = connection;
+    public void setConnection(SocketConnection<T> connection) {
+        if (this.connection != null) {
+            this.connection.destroy();
+        }
 
-        System.out.println("TEST");
+        if (connection != null) {
+            component.controlDisabled(true);
+        } else {
+            component.controlDisabled(false);
+        }
+
+        this.connection = connection;
     }
 
     @Override
@@ -52,8 +61,9 @@ public class SocketInput<T> extends Socket {
     }
 
     @Override
-    public NodeSection getSection() {
+    public NodeInput<T> getSection() {
         return component;
     }
+
 }
 

@@ -4,11 +4,12 @@ import javafx.beans.binding.Bindings;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
+import nodelibrary.editor.node.events.SocketEvent;
 
-public class SocketConnection extends CubicCurve {
+public class SocketConnection<T> extends CubicCurve {
     
-    SocketOutput<?> out;
-    SocketInput<?> in;
+    private SocketOutput<T> out;
+    private SocketInput<T> in;
 
 
     public SocketConnection() {
@@ -17,13 +18,14 @@ public class SocketConnection extends CubicCurve {
         setStroke(Color.BLACK);
     }
 
-    public SocketConnection(SocketOutput<?> out, SocketInput<?> in) {
-
+    public SocketConnection(SocketOutput<T> out, SocketInput<T> in) {
         this.out = out;
         this.in = in;
 
         setStart(out.getCenter());
         setEnd(in.getCenter());        
+
+        SocketController.MAIN.getChildren().add(this);
 
         init();
     }
@@ -71,5 +73,30 @@ public class SocketConnection extends CubicCurve {
 
     public static double lerp(double start, double end, double ratio) {
         return start + (end - start) * ratio;
+    }
+
+    public void passValue() {
+        in.getSection().setValue(out.getSection().getValue());
+    }
+
+    public void assign() {
+        in.setConnection(this);
+        out.addConnection(this);
+    }
+
+    public void destroy() {
+
+        System.out.println("SocketConnection Destroyed");
+
+        in.disown(this);
+        out.disown(this);
+        SocketController.MAIN.getChildren().remove(this);
+
+        // out.removeConnection(this);
+        // in.removeConnection(this);        
+
+        // out.fireEvent(new SocketEvent(SocketEvent.OUTPUT_UNLINKED, this));
+        // in.fireEvent(new SocketEvent(SocketEvent.INPUT_UNLINKED, this));
+
     }
 }

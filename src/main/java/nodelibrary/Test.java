@@ -11,15 +11,22 @@ public class Test extends Node {
     private NodeInput<Double> test;
 
     public Test(double x, double y) {
-        super(x, y, "Test Node");
+        super(x, y, "Times 5 Node");
     }
 
     protected void initialize() {
-        result = output(Double.class, "Result", new DoubleControl());
-        test   = input(Double.class, "Result");
+        result = output(Double.class, "Result");
+        test   = input(Double.class, "Result", new DoubleControl());
+
+        result.setValue(0.0);
     }
 
     protected void function() {
-        
+        result.setValue(test.getValue() * 5);
+    }
+
+    @Override
+    public String toString() {
+        return "Test1 Node";
     }
 }

@@ -9,12 +9,15 @@
     -fx-border-color: #000;
     -fx-border-width: 2;
     -fx-border-radius: 8px;
-
-    
 }
 
 .node-section * {
     -fx-text-fill:white;
     -fx-font-size:1.5em;
+}
+
+number-input {
+    -fx-background-color: #333;
+    -fx-border-radius:109;
 }
 

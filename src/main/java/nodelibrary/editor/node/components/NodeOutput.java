@@ -6,30 +6,36 @@ import nodelibrary.editor.node.Node;
 import nodelibrary.editor.node.components.control.DataControl;
 import nodelibrary.editor.node.components.sockets.Socket;
 import nodelibrary.editor.node.components.sockets.SocketOutput;
+import nodelibrary.editor.node.events.SocketEvent;
 
 public class NodeOutput<T> extends NodeSection {
 
-    private DataControl<T> dataControl;
-    SocketOutput<T> socket;
+    public DataControl<T> control;
+    public final SocketOutput<T> socket;
 
     private Class<T> type;
-    private T data;
+    private T value;
 
-    public NodeOutput(Class<T> type, String labelText, DataControl<T> dataControl, Node parent) {
+    public NodeOutput(Class<T> type, String labelText, DataControl<T> control, Node parent) {
         super(parent);
         this.type = type;
 
         Label label = new Label(labelText);
-        this.dataControl = dataControl;
 
         grid.add(label, 0, 0);
-        grid.add(dataControl, 0, 1);
+
+        if (control != null) {
+            this.control = control;
+
+            grid.add(control, 0, 1);
+        }
 
         socket = Socket.out(this, type);
         getChildren().add(socket);
 
         AnchorPane.setRightAnchor(socket, -9.0);
         AnchorPane.setTopAnchor(socket, 11.0);
+
     }
 
     /**
@@ -37,8 +43,11 @@ public class NodeOutput<T> extends NodeSection {
      * 
      * @param data
      */
-    public void setValue(T data) {
-        this.data = data;
+    public void setValue(T value) {
+        if (this.value != value) {
+            this.value = value;
+            socket.broadcast();            
+        }
     }
 
     /**
@@ -47,18 +56,26 @@ public class NodeOutput<T> extends NodeSection {
      * @return The value of the data
      */
     public T getValue() {
-        return data;
-    }
-
-    /**
-     * Broadcasts the value of the data to all connected Inputs
-     */
-    public void broadcast() {
-        
+        return value;
     }
 
     public void updateSocket() {
         socket.updateConnections();
     }
+
+    public void controlEnabled(boolean enabled) {
+        if (control != null) {
+            if (enabled) {
+                if (!grid.getChildren().contains(control)) {
+                    grid.add(control, 0, 1);
+                }
+            } else {
+                if (grid.getChildren().contains(control)) {
+                    grid.getChildren().remove(control);
+                }
+            }
+        }
+    }
+
 
 }
