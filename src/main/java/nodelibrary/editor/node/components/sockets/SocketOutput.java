@@ -3,11 +3,10 @@ package nodelibrary.editor.node.components.sockets;
 import java.util.ArrayList;
 
 import nodelibrary.editor.node.components.NodeOutput;
-import nodelibrary.editor.node.events.SocketEvent;
 
 public class SocketOutput<T> extends Socket {
 
-    private NodeOutput<T> component;
+    public final NodeOutput<T> component;
     private ArrayList<SocketConnection<T>> connections = new ArrayList<>();
 
     public SocketOutput(NodeOutput<T> component, Class<T> type) {
@@ -18,24 +17,13 @@ public class SocketOutput<T> extends Socket {
     }
 
     @SuppressWarnings("unchecked")
-    public SocketConnection<T> createLink(Socket socket) {
+    public void createLink(Socket socket) {
         if (isCompatible(this, socket)) {
             SocketInput<T> socketInput = (SocketInput<T>) socket;
             SocketConnection<T> connection = new SocketConnection<>(this, socketInput);
-            
-            socketInput.setConnection(connection);
-            connections.add(connection);
-           
-            this.fireEvent(new SocketEvent(SocketEvent.OUTPUT_LINKED, connection));
 
-            return connection;
-        } else {
-            return null;
+            connection.assign();
         }
-    }
-
-    public void addConnection(SocketConnection<T> connection) {
-        connections.add(connection);
     }
 
     @Override
@@ -45,10 +33,16 @@ public class SocketOutput<T> extends Socket {
         }
     }
 
-    public void removeConnection(SocketConnection<T> connection) {
-        if (connections.contains(connection)) {
-            connections.remove(connection);
-            connection.destroy();
+    // TODO: Add to abstract super
+    public void disown(SocketConnection<?> connection) {
+        if (this.connections.contains(connection)) {
+            this.connections.remove(connection);
+        }
+    }
+
+    public void addConnection(SocketConnection<T> connection) {
+        if (!this.connections.contains(connection)) {
+            this.connections.add(connection);
         }
     }
 

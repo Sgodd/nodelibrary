@@ -6,7 +6,6 @@ import javafx.scene.shape.Circle;
 import nodelibrary.editor.node.components.NodeInput;
 import nodelibrary.editor.node.components.NodeOutput;
 import nodelibrary.editor.node.components.NodeSection;
-import nodelibrary.editor.node.events.DataEvent;
 
 public abstract class Socket extends Circle {
     
@@ -38,10 +37,9 @@ public abstract class Socket extends Circle {
         });
 
         setOnDragDetected(e -> {
-
             if (this.getClass() == SocketInput.class) {
                 SocketInput<?> socket = (SocketInput<?>) this;
-                socket.removeConnection();
+                socket.setConnection(null);
             }
 
             startFullDrag();
@@ -74,9 +72,9 @@ public abstract class Socket extends Circle {
             Object source = e.getGestureSource();
             if (isSocket(source)) {
                 Socket socket = (Socket) source;
-                SocketConnection<?> connection = this.createLink(socket);
-                
-                SocketController.MAIN.addConnection(connection);
+                this.createLink(socket);
+
+                this.component.getNode().updateSockets();
             }
         });
 
@@ -102,11 +100,11 @@ public abstract class Socket extends Circle {
         }
     }
 
-    public abstract SocketConnection<?> createLink(Socket socket);
+    public abstract void createLink(Socket socket);
     public abstract void updateConnections();
+    public abstract void disown(SocketConnection<?> connection);
 
     public abstract NodeSection getSection();
-
 
     public Point2D getCenter() {
         return localToScene(0, 0);

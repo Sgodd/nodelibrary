@@ -10,23 +10,24 @@ import nodelibrary.editor.node.events.SocketEvent;
 
 public class NodeOutput<T> extends NodeSection {
 
-    private DataControl<T> dataControl;
-    SocketOutput<T> socket;
+    public DataControl<T> control;
+    public final SocketOutput<T> socket;
 
     private Class<T> type;
     private T value;
 
-    public NodeOutput(Class<T> type, String labelText, DataControl<T> dataControl, Node parent) {
+    public NodeOutput(Class<T> type, String labelText, DataControl<T> control, Node parent) {
         super(parent);
         this.type = type;
 
         Label label = new Label(labelText);
 
-        if (dataControl != null) {
-            this.dataControl = dataControl;
+        grid.add(label, 0, 0);
 
-            grid.add(label, 0, 0);
-            grid.add(dataControl, 0, 1);
+        if (control != null) {
+            this.control = control;
+
+            grid.add(control, 0, 1);
         }
 
         socket = Socket.out(this, type);
@@ -35,11 +36,6 @@ public class NodeOutput<T> extends NodeSection {
         AnchorPane.setRightAnchor(socket, -9.0);
         AnchorPane.setTopAnchor(socket, 11.0);
 
-        addEventHandler(SocketEvent.OUTPUT_LINKED, e -> {
-            e.connection.passValue();
-
-            e.consume();
-        });
     }
 
     /**
@@ -66,5 +62,20 @@ public class NodeOutput<T> extends NodeSection {
     public void updateSocket() {
         socket.updateConnections();
     }
+
+    public void controlEnabled(boolean enabled) {
+        if (control != null) {
+            if (enabled) {
+                if (!grid.getChildren().contains(control)) {
+                    grid.add(control, 0, 1);
+                }
+            } else {
+                if (grid.getChildren().contains(control)) {
+                    grid.getChildren().remove(control);
+                }
+            }
+        }
+    }
+
 
 }

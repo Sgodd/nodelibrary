@@ -15,14 +15,20 @@ public class SocketEvent extends NodeEvent {
     public static final EventType<SocketEvent> INPUT_LINKED = 
         new EventType<SocketEvent> (SocketEvent.SOCKET_EVENT, "INPUT_LINKED");
 
+    public static final EventType<SocketEvent> INPUT_UNLINKED = 
+        new EventType<SocketEvent> (SocketEvent.SOCKET_EVENT, "INPUT_UNLINKED");
+
     public static final EventType<SocketEvent> OUTPUT_LINKED = 
         new EventType<SocketEvent> (SocketEvent.SOCKET_EVENT, "OUTPUT_LINKED");
 
-    public SocketEvent(EventType<? extends NodeEvent> eventType, SocketConnection connection) {
+    public static final EventType<SocketEvent> OUTPUT_UNLINKED = 
+        new EventType<SocketEvent> (SocketEvent.SOCKET_EVENT, "OUTPUT_UNLINKED");
+
+    public SocketEvent(EventType<? extends NodeEvent> eventType, SocketConnection<?> connection) {
         super(eventType);
 
         this.connection = connection;
     }
 
-    public final SocketConnection connection;
+    public final SocketConnection<?> connection;
 }
