@@ -1,42 +1,19 @@
 package nodelibrary.editor.node.components.control;
 
-import javafx.scene.layout.HBox;
-
-public class IntegerControl extends DataControl<Integer> {
-
-    private IntegerInput integerInput;
+public class IntegerControl extends NumberControl<Integer> {
 
     public IntegerControl() {
-        integerInput = new IntegerInput(Integer.MIN_VALUE, Integer.MAX_VALUE, 0);
-
-        HBox hbox = new HBox();
-
-        getChildren().add(hbox);
-        hbox.getChildren().add(integerInput);        
+        super(new IntegerInput(Integer.MIN_VALUE, Integer.MAX_VALUE, 0));
+        setValue(0);
     }
 
     public IntegerControl(Integer min, Integer max, Integer init) {
-        integerInput = new IntegerInput(min, max, init);
-
-        HBox hbox = new HBox();
-
-        getChildren().add(hbox);
-        hbox.getChildren().add(integerInput);
+        super(new IntegerInput(min, max, init));
+        setValue(0);
     }
 
     @Override
     public Integer getValue() {
-        return null;
-    }
-
-    @Override
-    public void disable() {
-
-    }
-
-    @Override
-    public void enable() {
-
-    }
-    
+        return input.getValue();
+    }    
 }

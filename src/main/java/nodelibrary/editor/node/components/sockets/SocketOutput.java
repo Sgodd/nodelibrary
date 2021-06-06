@@ -3,6 +3,7 @@ package nodelibrary.editor.node.components.sockets;
 import java.util.ArrayList;
 
 import nodelibrary.editor.node.components.NodeOutput;
+import nodelibrary.editor.node.events.SocketEvent;
 
 public class SocketOutput<T> extends Socket {
 
@@ -37,6 +38,9 @@ public class SocketOutput<T> extends Socket {
     public void disown(SocketConnection<?> connection) {
         if (this.connections.contains(connection)) {
             this.connections.remove(connection);
+
+            this.fireEvent(new SocketEvent(SocketEvent.OUTPUT_UNLINKED, connection));
+
         }
     }
 
@@ -44,6 +48,9 @@ public class SocketOutput<T> extends Socket {
         if (!this.connections.contains(connection)) {
             this.connections.add(connection);
         }
+
+        this.fireEvent(new SocketEvent(SocketEvent.OUTPUT_LINKED, connection));
+
     }
 
     @Override

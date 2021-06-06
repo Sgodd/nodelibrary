@@ -14,6 +14,12 @@ import nodelibrary.editor.node.components.NodeInput;
 public abstract class Node extends Group {
 
     /**
+     * The VBox to contain vertically spaced components of the node
+     */
+    protected VBox container = new VBox();
+
+
+    /**
      * xOffset and yOffset are used when calcuating the x and y position offset from
      * where a user clicks on the node.
      */
@@ -25,11 +31,7 @@ public abstract class Node extends Group {
      */
     private double yOffset;
 
-    /**
-     * The VBox to contain vertically spaced components of the node
-     */
-    protected VBox container = new VBox();
-
+    // List of NodeOutputs<?>
     private ArrayList<NodeOutput<?>> outputs = new ArrayList<>();
     private ArrayList<NodeInput<?>> inputs = new ArrayList<>();
 
@@ -42,7 +44,7 @@ public abstract class Node extends Group {
         container.getChildren().add(label);
         container.getStyleClass().add("node-container");
         container.getStyleClass().add("node-section");
-        
+
         if (!outputs.isEmpty()) {
             container.getChildren().addAll(outputs);
         }
@@ -54,6 +56,89 @@ public abstract class Node extends Group {
         getChildren().addAll(container);
 
         initHandlers();
+    }  
+
+    /**
+     * Method to create an input for a node with a specified type and label given
+     * and adds it to the list of inputs.
+     * 
+     * @param <T>   The type specification for the class of the NodeInput
+     * @param type  A parameter for the Class of T
+     * @param label The label for the NodeInput
+     * 
+     * @return A newly constructed NodeInput<T>
+     */
+    public <T> NodeInput<T> input(Class<T> type, String label) {
+        NodeInput<T> input = new NodeInput<T>(type, label, null, this);
+        inputs.add(input);
+
+        return input;
+    }
+
+    /**
+     * Method to create an input for a node with a specified type and label and a
+     * given DataControl component and adds to a list of inputs for the node.
+     * 
+     * @param <T>     The type specification for the class of the NodeInput
+     * @param type    A parameter for the Class of T
+     * @param label   The label for the NodeInput
+     * @param control The DataControl component assosciated with the NodeInput
+     * 
+     * @return A newly constructed NodeInput<T>
+     */
+    public <T> NodeInput<T> input(Class<T> type, String label, DataControl<T> control) {
+        NodeInput<T> input = new NodeInput<T>(type, label, control, this);
+        inputs.add(input);
+
+        return input;
+    }
+
+    /**
+     * Method to create an output for a node with a specified type and label given
+     * and adds it to a list of Outputsp.
+     * 
+     * @param <T>   The type specification for the class of the NodeOutput
+     * @param type  A parameter for the Class of T
+     * @param label The label for the NodeInput
+     * 
+     * @return A newly constructed NodeOutput<T>
+     */
+    public <T> NodeOutput<T> output(Class<T> type, String label) {
+        NodeOutput<T> output = new NodeOutput<T>(type, label, null, this);
+        outputs.add(output);
+
+        return output;
+    }
+
+    /**
+     * Method to create an output for a node with a specified type and label given
+     * and a given DataControl component and adds to a list of outputs for the node.
+     * 
+     * @param <T>     The type specification for the class of the NodeOutput
+     * @param type    A parameter for the Class of T
+     * @param label   The label for the NodeInput
+     * @param control The DataControl component assosciated with the NodeOutput
+     * 
+     * @return A newly constructed NodeOutput<T>
+     */
+    public <T> NodeOutput<T> output(Class<T> type, String label, DataControl<T> control) {
+        NodeOutput<T> output = new NodeOutput<T>(type, label, control, this);
+        outputs.add(output);
+
+        return output;
+    }
+
+    /**
+     * 
+     */
+    public void updateSockets() {
+        for (NodeOutput<?> output : outputs) {
+            output.updateSocket();
+        }
+
+        for (NodeInput<?> input : inputs) {
+            input.updateSocket();
+        }
     }
 
     /**
@@ -81,69 +166,27 @@ public abstract class Node extends Group {
             updateSockets();
         });
 
-        // On mouse drag on a node, relocate the position of the node relative to the x and y offsets
+        // On mouse drag on a node, relocate the position of the node relative to the x
+        // and y offsets
         setOnMouseDragged(e -> {
             // xOffset - 7.0 to account for socket protrusion
             relocate(e.getSceneX() - xOffset - 7.0, e.getSceneY() - yOffset);
             updateSockets();
         });
 
+        // Handles when an input event is triggered
         addEventHandler(DataEvent.INPUT_UPDATE, e -> {
             try {
                 function();
             } catch (NullPointerException err) {
-                
+
             }
             e.consume();
         });
 
+        // Handles when a socket event is triggered
         addEventHandler(SocketEvent.SOCKET_EVENT, e -> {
             updateSockets();
         });
     }
-
-    public <T> NodeInput<T> input(Class<T> type, String label) {
-        NodeInput<T> input = new NodeInput<T>(type, label, null, this);
-        inputs.add(input);
-
-        return input;
-    }
-
-    public <T> NodeInput<T> input(Class<T> type, String label, DataControl<T> control) {
-        NodeInput<T> input = new NodeInput<T>(type, label, control, this);
-        inputs.add(input);
-
-        return input;
-    }
-
-    public <T> NodeOutput<T> output(Class<T> type, String label) {
-        NodeOutput<T> output = new NodeOutput<T>(type, label, null, this);
-        outputs.add(output);
-
-        return output;
-    }
-
-    public <T> NodeOutput<T> output(Class<T> type, String label, DataControl<T> control) {
-        NodeOutput<T> output = new NodeOutput<T>(type, label, control, this);
-        outputs.add(output);
-
-        return output;
-    }
-
-    public void updateSockets() {
-        for (NodeOutput<?> output : outputs) {
-            output.updateSocket();
-        }
-
-        for (NodeInput<?> input : inputs) {
-            input.updateSocket();
-        }
-    }
 }
-
-
-
-
-
-
-

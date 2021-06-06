@@ -5,6 +5,7 @@ import javafx.scene.Cursor;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.input.MouseEvent;
 import javafx.util.converter.IntegerStringConverter;
+import nodelibrary.editor.node.events.DataEvent;
 
 public class IntegerInput extends NumberInput<Integer> {
 
@@ -13,10 +14,6 @@ public class IntegerInput extends NumberInput<Integer> {
         input.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0));
     }
 
-    @Override
-    public Integer getValue() {
-        return (Integer) input.getTextFormatter().getValue();
-    }
 
     @Override 
     protected void validate() {
@@ -36,10 +33,22 @@ public class IntegerInput extends NumberInput<Integer> {
                 value = clamp(value + (e.getSceneX() - xOffset)).intValue();
 
                 xOffset = e.getSceneX();
-                input.setText(String.format("%d", value));
-    
+                setValue(value);
+                fireEvent(new DataEvent(DataEvent.CONTROL_UPDATE));
+
                 e.consume();
             }
         };
+    }
+
+    @Override
+    public Integer getValue() {
+        return (Integer) input.getTextFormatter().getValue();
+    }
+
+
+    @Override
+    public void setValue(Integer value) {
+        input.setText(String.format("%d", value));
     }
 }

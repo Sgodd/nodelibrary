@@ -11,7 +11,7 @@ public class SocketInput<T> extends Socket {
 
     public SocketInput(NodeInput<T> component, Class<T> type) {
         super(component);
-        
+
         this.component = component;
         this.type = type;
 
@@ -28,14 +28,16 @@ public class SocketInput<T> extends Socket {
             }
 
             connection.assign();
+
         }
     }
-    
+
     // TODO: Add to abstract super
     public void disown(SocketConnection<?> connection) {
         if (this.connection.equals(connection)) {
             this.connection = null;
             component.controlDisabled(false);
+            this.fireEvent(new SocketEvent(SocketEvent.INPUT_UNLINKED, connection));
         }
     }
 
@@ -51,6 +53,8 @@ public class SocketInput<T> extends Socket {
         }
 
         this.connection = connection;
+
+        this.fireEvent(new SocketEvent(SocketEvent.INPUT_LINKED, connection));
     }
 
     @Override
@@ -66,4 +70,3 @@ public class SocketInput<T> extends Socket {
     }
 
 }
-

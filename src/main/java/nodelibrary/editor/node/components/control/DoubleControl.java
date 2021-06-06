@@ -1,42 +1,19 @@
 package nodelibrary.editor.node.components.control;
 
-import javafx.scene.layout.HBox;
-
-public class DoubleControl extends DataControl<Double> {
-
-    private DoubleInput doubleInput;
+public class DoubleControl extends NumberControl<Double> {
 
     public DoubleControl() {
-        doubleInput = new DoubleInput(-Double.MAX_VALUE, Double.MAX_VALUE, 0.0);
-
-        HBox hbox = new HBox();
-
-        getChildren().add(hbox);
-        hbox.getChildren().add(doubleInput);        
+        super(new DoubleInput(-Double.MAX_VALUE, Double.MAX_VALUE, 0.0));
+        setValue(0.0);
     }
 
     public DoubleControl(double min, double max, double init) {
-        doubleInput = new DoubleInput(min, max, init);
-
-        HBox hbox = new HBox();
-
-        getChildren().add(hbox);
-        hbox.getChildren().add(doubleInput);        
+        super(new DoubleInput(min, max, init));
+        setValue(0.0);
     }
 
     @Override
     public Double getValue() {
-        return null;
-    }
-
-    @Override
-    public void disable() {
-
-    }
-
-    @Override
-    public void enable() {
-
-    }
-    
+        return input.getValue();
+    }    
 }

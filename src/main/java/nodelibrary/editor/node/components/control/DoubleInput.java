@@ -5,6 +5,7 @@ import javafx.scene.Cursor;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.input.MouseEvent;
 import javafx.util.converter.DoubleStringConverter;
+import nodelibrary.editor.node.events.DataEvent;
 
 public class DoubleInput extends NumberInput<Double> {
 
@@ -14,10 +15,7 @@ public class DoubleInput extends NumberInput<Double> {
         input.setTextFormatter(new TextFormatter<Double>(new DoubleStringConverter(), 0.0));
     }
 
-    @Override
-    public Double getValue() {
-        return (Double) input.getTextFormatter().getValue();
-    }
+    
 
     @Override 
     protected void validate() {
@@ -35,20 +33,32 @@ public class DoubleInput extends NumberInput<Double> {
                 Double value = (Double) input.getTextFormatter().getValue();
     
                 if (e.isShiftDown()) {
-                    value += value + 0.1 * (e.getSceneX() - xOffset);
+                    value += 0.1 * (e.getSceneX() - xOffset);
         
                 } else {
                     value += 1 * (e.getSceneX() - xOffset);
                 }
                     
                 xOffset = e.getSceneX();
-                input.setText(String.format("%.10f", value));
 
+                setValue(value);
                 validate();
+                fireEvent(new DataEvent(DataEvent.CONTROL_UPDATE));
+
     
                 e.consume();
     
             }
         };
+    }
+
+    @Override
+    public Double getValue() {
+        return (Double) input.getTextFormatter().getValue();
+    }
+
+    @Override
+    public void setValue(Double value) {
+        input.setText(String.format("%.10f", value));
     }
 }

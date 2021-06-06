@@ -18,6 +18,9 @@ public class DataEvent extends NodeEvent {
     public static final EventType<DataEvent> OUTPUT_UPDATE = 
         new EventType<DataEvent> (DataEvent.DATA_EVENT, "OUTPUT_UPDATE");
 
+    public static final EventType<DataEvent> CONTROL_UPDATE = 
+        new EventType<DataEvent> (DataEvent.DATA_EVENT, "CONTROL_UPDATE");
+
     public DataEvent(EventType<? extends NodeEvent> eventType) {
         super(eventType);
     }
