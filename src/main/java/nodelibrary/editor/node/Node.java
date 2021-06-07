@@ -38,8 +38,6 @@ public abstract class Node extends Group {
     public Node(double x, double y, String labelText) {
         initialize();
 
-        relocate(x, y);
-
         NodeLabel label = new NodeLabel(labelText, this);
         container.getChildren().add(label);
         container.getStyleClass().add("node-container");
@@ -56,6 +54,8 @@ public abstract class Node extends Group {
         getChildren().addAll(container);
 
         initHandlers();
+
+        relocate(x - 50, y - 50);
     }  
 
     /**
@@ -95,7 +95,7 @@ public abstract class Node extends Group {
 
     /**
      * Method to create an output for a node with a specified type and label given
-     * and adds it to a list of Outputsp.
+     * and adds it to a list of Outputs.
      * 
      * @param <T>   The type specification for the class of the NodeOutput
      * @param type  A parameter for the Class of T

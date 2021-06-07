@@ -1,10 +1,8 @@
 package nodelibrary.editor.node.components.control;
 
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.Group;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
@@ -13,7 +11,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import nodelibrary.editor.node.events.DataEvent;
 
-public abstract class NumberInput<T extends Number> extends Group {
+public abstract class NumberInput<T extends Number> extends DataInput<T> {
     
     public final TextField input = new TextField();
     private Rectangle screen = new Rectangle();
@@ -37,11 +35,11 @@ public abstract class NumberInput<T extends Number> extends Group {
         input.setStyle("-fx-border-color: black;" + 
             "-fx-border-width: 1 1 1 1;" + // top, right, bottom, left
             "-fx-background-radius: 10;"+
-            "-fx-border-radius:10;"+
+            "-fx-border-radius:11;"+
             "-fx-focus-color: transparent;"+
             "-fx-text-fill: black;"+
-            "-fx-font-size: 1em"+
-            "-fx-background-insets: -2, -0.3, 1, 2;"
+            "-fx-font-size: 1em;"+
+            "-fx-background-insets: 0 1 0 1;"
         );
         input.setFont(new Font(100));
 
@@ -54,8 +52,6 @@ public abstract class NumberInput<T extends Number> extends Group {
         initHandlers();
     }
 
-    public abstract T getValue();
-    public abstract void setValue(T value);
     protected abstract void validate();
     protected abstract EventHandler<MouseEvent> dragHandler();
 
