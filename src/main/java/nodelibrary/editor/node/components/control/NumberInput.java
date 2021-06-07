@@ -35,11 +35,11 @@ public abstract class NumberInput<T extends Number> extends DataInput<T> {
         input.setStyle("-fx-border-color: black;" + 
             "-fx-border-width: 1 1 1 1;" + // top, right, bottom, left
             "-fx-background-radius: 10;"+
-            "-fx-border-radius:10;"+
+            "-fx-border-radius:11;"+
             "-fx-focus-color: transparent;"+
             "-fx-text-fill: black;"+
-            "-fx-font-size: 1em"+
-            "-fx-background-insets: -2, -0.3, 1, 2;"
+            "-fx-font-size: 1em;"+
+            "-fx-background-insets: 0 1 0 1;"
         );
         input.setFont(new Font(100));
 

@@ -86,8 +86,6 @@ public class SocketConnection<T> extends CubicCurve {
 
     public void destroy() {
 
-        System.out.println("SocketConnection Destroyed");
-
         in.disown(this);
         out.disown(this);
         SocketController.MAIN.getChildren().remove(this);

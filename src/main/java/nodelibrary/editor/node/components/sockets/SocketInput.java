@@ -46,15 +46,14 @@ public class SocketInput<T> extends Socket {
             this.connection.destroy();
         }
 
+        this.connection = connection;
+
         if (connection != null) {
             component.controlDisabled(true);
+            this.fireEvent(new SocketEvent(SocketEvent.INPUT_LINKED, connection));
         } else {
             component.controlDisabled(false);
         }
-
-        this.connection = connection;
-
-        this.fireEvent(new SocketEvent(SocketEvent.INPUT_LINKED, connection));
     }
 
     @Override
