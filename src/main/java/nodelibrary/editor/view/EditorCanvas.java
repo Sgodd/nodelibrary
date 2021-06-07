@@ -5,8 +5,6 @@ import javafx.scene.Group;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
-import nodelibrary.DoubleOutputNode;
-import nodelibrary.IntegerOutputNode;
 import nodelibrary.editor.node.Node;
 import nodelibrary.editor.node.components.sockets.SocketController;
 
