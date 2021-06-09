@@ -5,10 +5,9 @@ import javafx.scene.Group;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
-import nodelibrary.DoubleOutputNode;
-import nodelibrary.IntegerOutputNode;
 import nodelibrary.editor.node.Node;
 import nodelibrary.editor.node.components.sockets.SocketController;
+import nodelibrary.editor.node.events.NodeEvent;
 
 public class EditorCanvas extends AnchorPane {
     
@@ -30,10 +29,16 @@ public class EditorCanvas extends AnchorPane {
         getChildren().addAll(scene, SocketController.MAIN, SocketController.MAIN.guideLine(), nodes);
 
         scene.setOnContextMenuRequested(e -> {
-
             mx = e.getSceneX();
             my = e.getSceneY();
             menu.show(scene, e.getScreenX(), e.getScreenY());
+
+            e.consume();
+        });
+
+        addEventHandler(NodeEvent.DELETED, e -> {
+
+            nodes.getChildren().remove(e.node);
 
             e.consume();
         });

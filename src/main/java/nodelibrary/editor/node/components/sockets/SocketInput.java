@@ -68,4 +68,9 @@ public class SocketInput<T> extends Socket {
         return component;
     }
 
+    public void destroy() {
+        if (connection != null) {
+            connection.destroy();
+        }
+    }
 }

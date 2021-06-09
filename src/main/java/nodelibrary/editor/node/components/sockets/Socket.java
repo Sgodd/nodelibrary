@@ -103,7 +103,8 @@ public abstract class Socket extends Circle {
     public abstract void createLink(Socket socket);
     public abstract void updateConnections();
     public abstract void disown(SocketConnection<?> connection);
-
+    public abstract void destroy();
+    
     public abstract NodeSection getSection();
 
     public Point2D getCenter() {

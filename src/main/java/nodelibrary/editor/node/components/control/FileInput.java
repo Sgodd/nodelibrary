@@ -11,10 +11,11 @@ public class FileInput extends DataInput<File> {
     private File file;
     private FileChooser fc = new FileChooser();
 
-    public FileInput() {
+    public FileInput(String dir) {
         Button fileChooser = new Button("Choose File");
         fileChooser.setOnAction(e -> {
             File temp = file;
+            fc.setInitialDirectory(new File(dir));
             file = fc.showOpenDialog(getScene().getWindow());
             if (file == null) {
                 file = temp;

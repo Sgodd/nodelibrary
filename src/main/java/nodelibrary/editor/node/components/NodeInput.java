@@ -114,4 +114,8 @@ public class NodeInput<T> extends NodeSection {
     public T getValue() {
         return value;
     }
+
+    public void destroy() {
+        socket.destroy();
+    }
 }

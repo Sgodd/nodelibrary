@@ -110,4 +110,8 @@ public class NodeOutput<T> extends NodeSection {
         return value;
     }
 
+
+    public void destroy() {
+        socket.destroy();
+    }
 }

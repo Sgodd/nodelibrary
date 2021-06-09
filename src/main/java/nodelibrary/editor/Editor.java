@@ -41,8 +41,8 @@ public class Editor {
         scene.getStylesheets().add(s);
     }
 
-    public <T extends Node> void addMenuItem(String itemLabel, Class<T> clazz) {
-        canvas.addMenuItem(itemLabel, clazz);
+    public <T extends Node> void addMenuItem(String itemLabel, Class<T> type) {
+        canvas.addMenuItem(itemLabel, type);
     }
 
     public void addNode(Node node) {
