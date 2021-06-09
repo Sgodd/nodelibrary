@@ -154,7 +154,7 @@ public abstract class Node extends Group {
     /**
      * The function required for a node to calculate its outputs
      */
-    protected abstract void function();
+    public abstract void function();
 
     /**
      * A private method to set up the handlers for handling mouse events.

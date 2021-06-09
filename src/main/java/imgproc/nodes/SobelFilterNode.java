@@ -22,7 +22,7 @@ public class SobelFilterNode extends Node {
     }
 
     @Override
-    protected void function() {
+    public void function() {
         SobelFilter filter = new SobelFilter();
         Image image = input.getValue();
         Image out = filter.apply(image);

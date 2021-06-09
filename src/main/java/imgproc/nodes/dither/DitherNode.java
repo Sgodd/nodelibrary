@@ -19,21 +19,22 @@ public class DitherNode extends Node {
     public DitherNode(double x, double y) {
         super(x, y, "Dither Node");
 
-        functionSelector = new FunctionSelector(this);
-        container.getChildren().add(functionSelector);
-
-        functionSelector.addFunction(new FloydSteinberg());
-        functionSelector.addFunction(new SobelFilter());
     }
 
     @Override
     protected void initialize() {
+        functionSelector = new FunctionSelector(this);
+
+        functionSelector.addFunction(new FloydSteinberg());
+        functionSelector.addFunction(new SobelFilter());
+
         output = output(Image.class, "Image", null);
+        addSection(functionSelector);
         input = input(Image.class, "Image", null);
     }
 
     @Override
-    protected void function() {
+    public void function() {
         Image image = input.getValue();
         output.setValue(functionSelector.getSelected().apply(image));
     }

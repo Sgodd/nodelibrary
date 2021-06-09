@@ -23,7 +23,7 @@ public class AddNode extends Node {
     }
 
     @Override
-    protected void function() {
+    public void function() {
         Double v1 = num1.getValue();
         Double v2 = num2.getValue();
         
