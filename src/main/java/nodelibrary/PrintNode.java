@@ -23,7 +23,7 @@ public class PrintNode extends Node {
         test = input(Object.class, "Input");
     }
 
-    protected void function() {
+    public void function() {
         outputText.setText(test.getValue().toString());
     }
 }

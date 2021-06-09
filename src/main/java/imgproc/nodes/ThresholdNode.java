@@ -27,7 +27,7 @@ public class ThresholdNode extends Node {
     }
 
     @Override
-    protected void function() {
+    public void function() {
         Image i = input.getValue();
 
         int width = (int) i.getWidth();

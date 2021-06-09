@@ -7,6 +7,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import nodelibrary.editor.node.components.NodeLabel;
 import nodelibrary.editor.node.components.NodeOutput;
+import nodelibrary.editor.node.components.NodeSection;
 import nodelibrary.editor.node.components.control.DataControl;
 import nodelibrary.editor.node.events.DataEvent;
 import nodelibrary.editor.node.events.NodeEvent;
@@ -38,20 +39,14 @@ public abstract class Node extends Group {
     private ArrayList<NodeInput<?>> inputs = new ArrayList<>();
 
     public Node(double x, double y, String labelText) {
+        NodeLabel label = new NodeLabel(labelText, this);
+        addSection(label);
+        
         initialize();
 
-        NodeLabel label = new NodeLabel(labelText, this);
-        container.getChildren().add(label);
+
         container.getStyleClass().add("node-container");
         container.getStyleClass().add("node-section");
-
-        if (!outputs.isEmpty()) {
-            container.getChildren().addAll(outputs);
-        }
-
-        if (!inputs.isEmpty()) {
-            container.getChildren().addAll(inputs);
-        }
 
         getChildren().addAll(container);
 
@@ -73,6 +68,7 @@ public abstract class Node extends Group {
     public <T> NodeInput<T> input(Class<T> type, String label) {
         NodeInput<T> input = new NodeInput<T>(type, label, null, this);
         inputs.add(input);
+        addSection(input);
 
         return input;
     }
@@ -91,6 +87,7 @@ public abstract class Node extends Group {
     public <T> NodeInput<T> input(Class<T> type, String label, DataControl<T> control) {
         NodeInput<T> input = new NodeInput<T>(type, label, control, this);
         inputs.add(input);
+        addSection(input);
 
         return input;
     }
@@ -108,6 +105,7 @@ public abstract class Node extends Group {
     public <T> NodeOutput<T> output(Class<T> type, String label) {
         NodeOutput<T> output = new NodeOutput<T>(type, label, null, this);
         outputs.add(output);
+        addSection(output);
 
         return output;
     }
@@ -126,8 +124,13 @@ public abstract class Node extends Group {
     public <T> NodeOutput<T> output(Class<T> type, String label, DataControl<T> control) {
         NodeOutput<T> output = new NodeOutput<T>(type, label, control, this);
         outputs.add(output);
+        addSection(output);
 
         return output;
+    }
+
+    public void addSection(NodeSection section) {
+        container.getChildren().add(section);
     }
 
     /**
@@ -151,7 +154,7 @@ public abstract class Node extends Group {
     /**
      * The function required for a node to calculate its outputs
      */
-    protected abstract void function();
+    public abstract void function();
 
     /**
      * A private method to set up the handlers for handling mouse events.

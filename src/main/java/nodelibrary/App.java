@@ -18,8 +18,7 @@ public class App extends Application
     public void start(Stage stage) {
         Editor editor = new Editor(stage);
 
-        editor.addMenuItem("Double", DoubleOutputNode.class);
-        editor.addMenuItem("AddNode", AddNode.class);
+        editor.addMenuItem("Double Selector", SelectorNode.class);
         editor.addMenuItem("PrintNode", PrintNode.class);
 
 

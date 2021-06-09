@@ -23,7 +23,7 @@ public class ImageViewerNode extends Node {
     }
 
     @Override
-    protected void function() {
+    public void function() {
         Image i = image.getValue();
         iSection.view.setImage(i);
     }

@@ -22,7 +22,7 @@ public class Test3 extends Node {
         test2  = input(Double.class, "Result2", new DoubleControl(-5,255,0));
     }
 
-    protected void function() {
+    public void function() {
         Double value = test.getValue() + test2.getValue();
         result.setValue(value);
     }

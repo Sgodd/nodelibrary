@@ -18,7 +18,7 @@ public class IntegerOutputNode extends Node {
     }
 
     @Override
-    protected void function() {
+    public void function() {
 
     }
 
