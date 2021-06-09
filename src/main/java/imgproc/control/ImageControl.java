@@ -8,7 +8,7 @@ import nodelibrary.editor.node.events.DataEvent;
 
 public class ImageControl extends DataControl<Image> {
 
-    private FileInput fileInput = new FileInput();
+    private FileInput fileInput = new FileInput(System.getProperty("user.home") + "/Pictures");
     private Image image;
 
     public ImageControl() {

@@ -1,12 +1,13 @@
 package imgproc.functions.filters;
 
+import imgproc.functions.ImageFunction;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
-public class SobelFilter {
+public class SobelFilter implements ImageFunction {
     
     private static double[][] xKernel = {
         {-1, 0, 1},
@@ -44,8 +45,6 @@ public class SobelFilter {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
 
-
-
                 int kxMin = -Math.min(1, x);
                 int kxMax = Math.min(width-1-x, 1);
 
@@ -77,6 +76,10 @@ public class SobelFilter {
         }
 
 		return out;
-
 	}
+
+    @Override
+    public String toString() {
+        return "Sobel Filter";
+    }
 }

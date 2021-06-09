@@ -76,7 +76,10 @@ public class SocketConnection<T> extends CubicCurve {
     }
 
     public void passValue() {
-        in.getSection().setValue(out.getSection().getValue());
+        T value = out.getSection().getValue();
+        if (value != null) {
+            in.getSection().setValue(value);
+        }
     }
 
     public void assign() {
@@ -90,11 +93,8 @@ public class SocketConnection<T> extends CubicCurve {
         out.disown(this);
         SocketController.MAIN.getChildren().remove(this);
 
-        // out.removeConnection(this);
-        // in.removeConnection(this);        
-
-        // out.fireEvent(new SocketEvent(SocketEvent.OUTPUT_UNLINKED, this));
-        // in.fireEvent(new SocketEvent(SocketEvent.INPUT_UNLINKED, this));
+        out.fireEvent(new SocketEvent(SocketEvent.OUTPUT_UNLINKED, this));
+        in.fireEvent(new SocketEvent(SocketEvent.INPUT_UNLINKED, this));
 
     }
 }

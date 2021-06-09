@@ -63,4 +63,16 @@ public class SocketOutput<T> extends Socket {
             connection.passValue();
         }
     }
+
+    /**
+     * Removes all connections assosciated with the socket and destroys them.
+     */
+    public void destroy() {
+        int size = connections.size();
+
+        // Removing connections from arraylist while iterating is not safe therefore done this way.
+        for (int i = 0; i < size; i++) {
+            connections.get(0).destroy();
+        }
+    }
 }

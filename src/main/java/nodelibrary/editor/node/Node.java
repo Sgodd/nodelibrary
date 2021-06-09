@@ -3,11 +3,13 @@ package nodelibrary.editor.node;
 import java.util.ArrayList;
 
 import javafx.scene.Group;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import nodelibrary.editor.node.components.NodeLabel;
 import nodelibrary.editor.node.components.NodeOutput;
 import nodelibrary.editor.node.components.control.DataControl;
 import nodelibrary.editor.node.events.DataEvent;
+import nodelibrary.editor.node.events.NodeEvent;
 import nodelibrary.editor.node.events.SocketEvent;
 import nodelibrary.editor.node.components.NodeInput;
 
@@ -161,6 +163,7 @@ public abstract class Node extends Group {
             xOffset = e.getX();
             yOffset = e.getY();
 
+            toFront();
             requestFocus();
 
             updateSockets();
@@ -172,6 +175,14 @@ public abstract class Node extends Group {
             // xOffset - 7.0 to account for socket protrusion
             relocate(e.getSceneX() - xOffset - 7.0, e.getSceneY() - yOffset);
             updateSockets();
+        });
+
+        setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.DELETE) {
+                fireEvent(new NodeEvent(NodeEvent.DELETED, this));
+                destroy();
+            }
+            e.consume();
         });
 
         // Handles when an input event is triggered
@@ -188,5 +199,15 @@ public abstract class Node extends Group {
         addEventHandler(SocketEvent.SOCKET_EVENT, e -> {
             updateSockets();
         });
+    }
+
+    private void destroy() {
+        for (NodeOutput<?> output : outputs) {
+            output.destroy();
+        }
+
+        for (NodeInput<?> input : inputs) {
+            input.destroy();
+        }
     }
 }
