@@ -1,5 +1,6 @@
 package imgproc.nodes;
 
+import imgproc.functions.ImageProcessor;
 import imgproc.functions.filters.SobelFilter;
 import javafx.scene.image.Image;
 import nodelibrary.editor.node.Node;
@@ -23,11 +24,15 @@ public class SobelFilterNode extends Node {
 
     @Override
     public void function() {
-        SobelFilter filter = new SobelFilter();
-        Image image = input.getValue();
-        Image out = filter.apply(image);
 
-        output.setValue(out);
+        ImageProcessor processor = new ImageProcessor(new SobelFilter());
+        Image image = input.getValue();
+
+        if (image != null) {
+            Image out = processor.apply(image);
+            output.setValue(out);
+        }
+
     }
-    
+
 }

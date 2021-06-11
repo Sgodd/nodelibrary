@@ -24,10 +24,12 @@ public class App extends Application
     public void start(Stage stage) {
         Editor editor = new Editor(stage);
 
-        editor.addMenuItem("Image", ImageNode.class);
-        editor.addMenuItem("Image Viewer", ImageViewerNode.class);
-        editor.addMenuItem("Threshold", ThresholdNode.class);
-        editor.addMenuItem("Sobel Filter", SobelFilterNode.class);
-        editor.addMenuItem("Dither Node", DitherNode.class);
+        
+
+        // editor.addMenuItem("Image", ImageNode.class);
+        // editor.addMenuItem("Image Viewer", ImageViewerNode.class);
+        // editor.addMenuItem("Threshold", ThresholdNode.class);
+        // editor.addMenuItem("Sobel Filter", SobelFilterNode.class);
+        // editor.addMenuItem("Dither Node", DitherNode.class);
     }
 }

@@ -1,10 +1,7 @@
 package imgproc.functions.filters;
 
 import imgproc.functions.ImageFunction;
-import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
+import imgproc.functions.ImageProcessor;
 import javafx.scene.paint.Color;
 
 public class SobelFilter implements ImageFunction {
@@ -21,13 +18,10 @@ public class SobelFilter implements ImageFunction {
         {-1, -2, -1}
     };
 
-    public Image apply(Image in) {
-		int width = (int) in.getWidth();
-		int height = (int) in.getHeight();
+    public void apply(ImageProcessor p) {
 
-		PixelReader reader = in.getPixelReader();
-		WritableImage out = new WritableImage(reader, width, height);
-		PixelWriter writer = out.getPixelWriter();
+        int height = p.height;
+        int width = p.width;
 
         double[][] img = new double[height][width];
 
@@ -37,7 +31,7 @@ public class SobelFilter implements ImageFunction {
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                img[y][x] = reader.getColor(x,y).getBrightness();
+                img[y][x] = p.reader.getColor(x,y).getBrightness();
             }
         }
 
@@ -71,11 +65,9 @@ public class SobelFilter implements ImageFunction {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 double i = (1/max) * G[y][x];
-                writer.setColor(x, y, new Color(i,i,i,1));
+                p.writer.setColor(x, y, new Color(i,i,i,1));
             }
         }
-
-		return out;
 	}
 
     @Override

@@ -26,6 +26,9 @@ public class AddNode extends Node {
     public void function() {
         Double v1 = num1.getValue();
         Double v2 = num2.getValue();
+
+        System.out.println(v1);
+        System.out.println(v2);
         
         output.setValue(v1 + v2);
     }

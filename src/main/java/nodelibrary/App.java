@@ -1,8 +1,13 @@
 package nodelibrary;
 
+import imgproc.nodes.SobelFilterNode;
+import imgproc.nodes.ThresholdNode;
+import imgproc.nodes.dither.DitherNode;
 import javafx.application.Application;
+import javafx.scene.control.Menu;
 import javafx.stage.Stage;
 import nodelibrary.editor.Editor;
+import nodelibrary.editor.view.NodeMenu;
 
 /**
  * Hello world!
@@ -18,8 +23,6 @@ public class App extends Application
     public void start(Stage stage) {
         Editor editor = new Editor(stage);
 
-        editor.addMenuItem("Double Selector", SelectorNode.class);
-        editor.addMenuItem("PrintNode", PrintNode.class);
 
 
     }
