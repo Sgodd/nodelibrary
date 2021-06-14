@@ -15,7 +15,9 @@ public class Selector<T> extends NodeSection {
 
         dropdown.getSelectionModel().selectedItemProperty().addListener((observable, oldVal, newVal) -> {
             this.value = newVal;
-            parent.function();
+            if (oldVal != null && oldVal != newVal) {
+                parent.function();
+            }
         });
     }    
 
@@ -23,6 +25,7 @@ public class Selector<T> extends NodeSection {
         dropdown.getItems().add(item);
         dropdown.getSelectionModel().selectFirst();
     }
+
 
     public T getValue() {
         return value;

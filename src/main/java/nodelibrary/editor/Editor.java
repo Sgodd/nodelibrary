@@ -1,21 +1,26 @@
 package nodelibrary.editor;
 
 import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import nodelibrary.editor.node.Node;
 import nodelibrary.editor.view.EditorCanvas;
 import nodelibrary.editor.view.EditorToolBar;
+import nodelibrary.editor.view.NodeContextMenu;
 
 public class Editor {
     
-    EditorCanvas canvas;
+    private EditorCanvas canvas;
+    
+
+    public final NodeContextMenu menu;
 
     public Editor(Stage stage) {
         AnchorPane root = new AnchorPane();
         
         Scene scene = new Scene(root, 1280, 720);
-        
+
 
         canvas = new EditorCanvas();
         EditorToolBar toolbar = new EditorToolBar();
@@ -39,11 +44,26 @@ public class Editor {
 
         String s = getClass().getResource("./Style.css").toExternalForm();
         scene.getStylesheets().add(s);
+
+        menu = new NodeContextMenu(canvas);
+        
+        canvas.scene.setOnContextMenuRequested(e -> {
+            menu.setPos(e.getSceneX(), e.getSceneY());
+            menu.show(canvas.scene, e.getScreenX(), e.getScreenY());
+
+            // menu.setPos(e.getSceneX(), e.getSceneY());
+            // menu.show(scene, e.getScreenX(), e.getScreenY());
+            // mx = e.getSceneX();
+            // my = e.getSceneY();
+            // menu.show(scene, e.getScreenX(), e.getScreenY());
+
+            // e.consume();
+        });
     }
 
-    public <T extends Node> void addMenuItem(String itemLabel, Class<T> type) {
-        canvas.addMenuItem(itemLabel, type);
-    }
+    // public <T extends Node> void addMenuItem(String itemLabel, Class<T> type) {
+    //     canvas.addMenuItem(itemLabel, type);
+    // }
 
     public void addNode(Node node) {
         canvas.addNode(node);

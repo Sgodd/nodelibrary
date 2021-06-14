@@ -4,18 +4,18 @@ import imgproc.functions.ImageFunction;
 import imgproc.functions.ImageProcessor;
 import javafx.scene.paint.Color;
 
+public class Dither {
+    public final ImageFunction[] functions = {
+        new FloydSteinberg2()
+    };
+}
 
-public class FloydSteinberg implements ImageFunction {
+class FloydSteinberg2 implements ImageFunction {
 
     private static final double alpha = (double) 7 / 16;
     private static final double beta = (double) 3 / 16;
     private static final double gamma = (double) 5 / 16;
     private static final double sigma = (double) 1 / 16;
-
-    @Override
-    public String toString() {
-        return "Floyd-Steinberg Dither";
-    }
 
     @Override
     public void apply(ImageProcessor p) {
@@ -53,5 +53,9 @@ public class FloydSteinberg implements ImageFunction {
         }
     }
 
-
+    @Override
+    public String toString() {
+        return "Floyd-Steinberg Dither";
+    }
 }
+
