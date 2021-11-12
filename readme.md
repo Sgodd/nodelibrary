@@ -6,4 +6,5 @@ This framework was then showcased by extending this framework into an simple ima
 
 ### Further Information
 For a more indepth understanding of the project, please read the thesis which was produced during my final year at Swansea University.
-[Thesis](https://github.com/Sgodd/nodelibrary/blob/master/thesis.pdf)
+
+The thesis can be found [here](https://github.com/Sgodd/nodelibrary/blob/master/thesis.pdf).
