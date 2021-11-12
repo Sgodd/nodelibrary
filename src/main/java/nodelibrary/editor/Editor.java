@@ -1,7 +1,6 @@
 package nodelibrary.editor;
 
 import javafx.scene.Scene;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import nodelibrary.editor.node.Node;
@@ -23,7 +22,7 @@ public class Editor {
 
 
         canvas = new EditorCanvas();
-        EditorToolBar toolbar = new EditorToolBar();
+        // EditorToolBar toolbar = new EditorToolBar();
 
         AnchorPane.setTopAnchor(canvas, 0.0);
         AnchorPane.setLeftAnchor(canvas, 0.0);
