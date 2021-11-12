@@ -29,9 +29,9 @@ public class ImageSection extends NodeSection {
     private Point2D imagePos;
 
     private static final double MIN_WIDTH = 120;
-    private static final double MAX_WIDTH = 720;
+    private static final double MAX_WIDTH = 1080;
     private static final double MIN_HEIGHT = 50;
-    private static final double MAX_HEIGHT = 720;
+    private static final double MAX_HEIGHT = 1080;
 
     private static final double MIN_ZOOM_WIDTH = 10;
 

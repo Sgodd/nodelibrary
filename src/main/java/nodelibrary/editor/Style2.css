@@ -3,37 +3,35 @@
 }
 
 .node-container {
-    -fx-background-color:#222;
+    -fx-background-color:#DDD;
     -fx-background-radius:8px;
     -fx-border-style: solid;
-    -fx-border-color: #000;
+    -fx-border-color: #FFF;
     -fx-border-width: 2;
     -fx-border-radius: 8px;
 }
 
 .node-section *{
-    -fx-text-fill:DDD;
+    -fx-text-fill:#333;
     -fx-font-size:1.5em;
 }
 
 .number-input {
-    -fx-background-color: #333;
+    -fx-background-color: #CCC;
     -fx-border-radius:109;
 }
 
 
-/* .button {
-    -fx-text-fill:#333;
-} */
-
 .combo-box * {
-    -fx-text-fill:#333;
+    -fx-text-fill:#CCC;
 }
 
-.data-control *.button {
-    -fx-text-fill:#333;
+
+
+.button {
+    -fx-text-fill:#444;
 }
 
 .data-control {
-    -fx-text-fill:#DDD;
+    -fx-text-fill: #CCC;
 }

@@ -9,8 +9,8 @@ import nodelibrary.editor.node.events.DataEvent;
 
 public class DoubleInput extends NumberInput<Double> {
 
-    public DoubleInput(Double min, Double max, Double initial) {
-        super(min, max, initial);
+    public DoubleInput(Double min, Double max, Double initial, Double step) {
+        super(min, max, initial, step);
 
         input.setTextFormatter(new TextFormatter<Double>(new DoubleStringConverter(), 0.0));
     }
@@ -33,10 +33,10 @@ public class DoubleInput extends NumberInput<Double> {
                 Double value = (Double) input.getTextFormatter().getValue();
     
                 if (e.isShiftDown()) {
-                    value += 0.1 * (e.getSceneX() - xOffset);
+                    value += (step*0.1) * (e.getSceneX() - xOffset);
         
                 } else {
-                    value += 1 * (e.getSceneX() - xOffset);
+                    value += step * (e.getSceneX() - xOffset);
                 }
                     
                 xOffset = e.getSceneX();

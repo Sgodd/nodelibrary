@@ -15,7 +15,6 @@ public class NodeMenu extends Menu {
         this.parent = parent;
     }
 
-
     public <T extends Node> void addMenuItem(String itemLabel, Class<T> type) {
         MenuItem mItem = new MenuItem(itemLabel);
 
@@ -30,5 +29,9 @@ public class NodeMenu extends Menu {
         });
 
         getItems().add(mItem);
+    }
+
+    public void addSubMenu(NodeMenu menu) {
+        this.getItems().add(menu);
     }
 }

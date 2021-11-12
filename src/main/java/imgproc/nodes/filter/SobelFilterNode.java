@@ -1,4 +1,4 @@
-package imgproc.nodes;
+package imgproc.nodes.filter;
 
 import imgproc.functions.ImageProcessor;
 import imgproc.functions.filters.SobelFilter;
