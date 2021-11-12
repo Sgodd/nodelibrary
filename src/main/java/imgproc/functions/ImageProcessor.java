@@ -28,10 +28,19 @@ public class ImageProcessor {
         reader = image.getPixelReader();
         out = new WritableImage(reader, width, height);
         writer = out.getPixelWriter();
-
+        
+        
         f.apply(this);
 
         return out;
     }
+
+    public void setFunction(ImageFunction f) {
+        this.f = f;
+    }
+
+    
+
+    
 
 }

@@ -18,8 +18,8 @@ public class Test3 extends Node {
 
     protected void initialize() {
         result = output(Double.class, "Result", null);
-        test   = input(Integer.class, "Result", new IntegerControl(-5,255,0));
-        test2  = input(Double.class, "Result2", new DoubleControl(-5,255,0));
+        // test   = input(Integer.class, "Result", new IntegerControl(-5,255,0));
+        // test2  = input(Double.class, "Result2", new DoubleControl(-5,255,0));
     }
 
     public void function() {

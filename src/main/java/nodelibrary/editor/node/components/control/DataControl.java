@@ -10,6 +10,8 @@ public abstract class DataControl<T> extends VBox {
         getStyleClass().add("value-control");
         setAlignment(Pos.CENTER);
 
+        getStyleClass().add("data-control");
+
         addEventHandler(DataEvent.CONTROL_UPDATE, e -> {
             
         });

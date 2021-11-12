@@ -19,15 +19,17 @@ public abstract class NumberInput<T extends Number> extends DataInput<T> {
     protected final T min;
     protected final T max;
     protected final T initial;
+    protected final T step;
 
     protected double xOffset;
     
-    public NumberInput(T min, T max, T initial) {
+    public NumberInput(T min, T max, T initial, T step) {
         input.getStyleClass().add("number-input");
 
         this.min = min;
         this.max = max;
         this.initial = initial;
+        this.step = step;
 
         input.setMinHeight(25);
         input.setMaxHeight(25);
@@ -37,7 +39,6 @@ public abstract class NumberInput<T extends Number> extends DataInput<T> {
             "-fx-background-radius: 10;"+
             "-fx-border-radius:11;"+
             "-fx-focus-color: transparent;"+
-            "-fx-text-fill: black;"+
             "-fx-font-size: 1em;"+
             "-fx-background-insets: 0 1 0 1;"
         );

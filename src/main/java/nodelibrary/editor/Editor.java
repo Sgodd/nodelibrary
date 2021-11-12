@@ -30,11 +30,11 @@ public class Editor {
         AnchorPane.setRightAnchor(canvas, 0.0);
         AnchorPane.setBottomAnchor(canvas, 0.0);
 
-        AnchorPane.setTopAnchor(toolbar, 0.0);
-        AnchorPane.setLeftAnchor(toolbar, 0.0);
-        AnchorPane.setRightAnchor(toolbar, 0.0);
+        // AnchorPane.setTopAnchor(toolbar, 0.0);
+        // AnchorPane.setLeftAnchor(toolbar, 0.0);
+        // AnchorPane.setRightAnchor(toolbar, 0.0);
 
-        root.getChildren().addAll(canvas, toolbar);
+        root.getChildren().addAll(canvas);
         root.requestFocus();
 
         stage.setTitle("Node Editor");
@@ -42,7 +42,7 @@ public class Editor {
         stage.setScene(scene);
         stage.show();
 
-        String s = getClass().getResource("./Style.css").toExternalForm();
+        String s = getClass().getResource("./Style2.css").toExternalForm();
         scene.getStylesheets().add(s);
 
         menu = new NodeContextMenu(canvas);

@@ -9,8 +9,8 @@ import nodelibrary.editor.node.events.DataEvent;
 
 public class IntegerInput extends NumberInput<Integer> {
 
-    public IntegerInput(Integer min, Integer max, Integer initial) {
-        super(min, max, initial);
+    public IntegerInput(Integer min, Integer max, Integer initial, Integer step) {
+        super(min, max, initial, step);
         input.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0));
     }
 
@@ -30,7 +30,7 @@ public class IntegerInput extends NumberInput<Integer> {
                 getScene().setCursor(Cursor.H_RESIZE);
                 Integer value = (Integer) input.getTextFormatter().getValue();
     
-                value = clamp(value + (e.getSceneX() - xOffset)).intValue();
+                value = clamp(value + step*(e.getSceneX() - xOffset)).intValue();
 
                 xOffset = e.getSceneX();
                 setValue(value);

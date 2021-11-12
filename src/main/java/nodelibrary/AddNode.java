@@ -19,24 +19,14 @@ public class AddNode extends Node {
     protected void initialize() {
         num1 = input(Double.class, "Value 1", new DoubleControl());        
         num2 = input(Double.class, "Value 2", new DoubleControl());        
-        output = output(Double.class, "Output", null);
+        output = output(Double.class, "Output");
     }
 
     @Override
     public void function() {
         Double v1 = num1.getValue();
         Double v2 = num2.getValue();
-
-        System.out.println(v1);
-        System.out.println(v2);
         
         output.setValue(v1 + v2);
     }
-
-    @Override
-    public String toString() {
-        return "Add Node";
-    }
-    
-    
 }

@@ -42,6 +42,7 @@ public class NodeInput<T> extends NodeSection {
         // If a control is given then we add it to the view
         if (control != null) {
             this.control = control;
+            this.value = control.getValue();
 
             grid.add(control, 0, 1);
         }

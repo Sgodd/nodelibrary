@@ -1,6 +1,5 @@
 package nodelibrary;
 
-import imgproc.nodes.SobelFilterNode;
 import imgproc.nodes.ThresholdNode;
 import imgproc.nodes.dither.DitherNode;
 import javafx.application.Application;

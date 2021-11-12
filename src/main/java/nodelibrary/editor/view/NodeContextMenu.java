@@ -24,21 +24,6 @@ public class NodeContextMenu extends ContextMenu {
     public void addMenu(Menu menu) {
         getItems().add(menu);
     }
-
-    // public <T extends Node> void addMenuItem(Menu menu, String itemLabel, Class<T> type) {
-    //     MenuItem mItem = new MenuItem(itemLabel);
-
-    //     mItem.setOnAction(e -> {
-    //         try {
-    //             T node = type.getDeclaredConstructor(double.class, double.class).newInstance(mx, my);
-    //             canvas.addNode(node);
-    //         } catch (Exception err) {
-    //             err.printStackTrace();
-    //         }
-    //     });
-
-    //     menu.getItems().add(mItem);
-    // }
     
     public void setPos(double x, double y) {
         mx = x;
